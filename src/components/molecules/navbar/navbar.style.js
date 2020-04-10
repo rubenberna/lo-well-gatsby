@@ -21,7 +21,7 @@ export const NavLink = styled(Link)`
   text-decoration: none;
   transition: 0.3s all;
   &:hover {
-    color: #ffd600 !important;
+    color: #a5d6a7 !important;
   }
 `
 export const Title = styled.h4`

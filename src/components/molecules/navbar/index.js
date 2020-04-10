@@ -1,5 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
+import { Link } from "gatsby"
 import { Navbar, NavDropdown } from 'react-bootstrap'
 
 import { LinksContainer, NavLink, Title, Brand } from './navbar.style'
@@ -11,7 +12,8 @@ const onzeDienstLinks = [
 ]
 
 const linkStyle = {
-  textDecoration: `none`
+  textDecoration: `none`,
+  color: '#424242'
 }
 
 const Header = ({ siteTitle }) => (
@@ -19,13 +21,13 @@ const Header = ({ siteTitle }) => (
     <div className='container'>
       <Navbar.Brand>
         <Brand>
-          <NavLink
+          <Link
             style={linkStyle}
             to='/'>
             <Title id='head-brand'>
               {siteTitle}
             </Title>
-          </NavLink>
+          </Link>
         </Brand>
       </Navbar.Brand>
       <Navbar.Toggle />

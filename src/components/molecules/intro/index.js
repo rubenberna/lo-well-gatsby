@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container } from '../../styledComponents/containers'
-import { SubHeader, Header, Paragraph } from '../../styledComponents/typography'
+import { SubHeader, Header, Paragraph, Footer } from '../../styledComponents/typography'
+import { lightGrey } from '../../styledComponents/variables'
 
 const Intro = ({ children}) => {
   const { 
@@ -10,10 +11,13 @@ const Intro = ({ children}) => {
     width,
     display,
     justify,
-    weight
+    weight,
+    footer,
+    strongHeader
    } = children
     
   return (
+    <>
     <Container width={width} display={display} justify={justify}>
       <Container 
         width='63%' 
@@ -21,14 +25,23 @@ const Intro = ({ children}) => {
         direction='column'>
         <SubHeader 
           weight={weight}
-          color='#757575'
+          color={lightGrey}
           >
           {subHeader}
         </SubHeader>
-        <Header margin='0 0 30px 0'>{header}</Header>
-        <Paragraph color='#757575'>{paragraph}</Paragraph>
+        <Header margin='0 0 30px 0' weight={strongHeader ? 700 : ''}>{header}</Header>
+        <Paragraph color={lightGrey}>{paragraph}</Paragraph>
+        <Footer 
+          margin='40px 0 0 0' 
+          weight='700' 
+          color={lightGrey}
+          size='14px'
+          >
+          {footer}
+        </Footer>
       </Container>
     </Container >
+    </>
   )
 }
 
