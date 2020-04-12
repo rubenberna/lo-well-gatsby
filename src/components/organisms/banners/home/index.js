@@ -17,7 +17,7 @@ const HomeBanner = () => {
           justify: 'center',
         }}
       </Intro>
-        <Container width='40%' height='90vh'>
+        <Container width='40%' height='790px'>
           <HomeImage/>
         </Container>
     </Container>

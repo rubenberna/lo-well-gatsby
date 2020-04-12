@@ -10,9 +10,15 @@ const StyledContainer = styled.div`
   justify-content: ${({justify}) => justify};
   align-items: ${({ align }) => align};
   background: ${({ background }) => background};
+  position: ${({ position }) => position};
+  z-index: ${({ zIndex }) => zIndex};
+  top: ${({ top }) => top};
+  left: ${({ left }) => left};
+  padding: ${({ padding }) => padding};
+  border: ${({ border }) => border};
 `
 
-export const Container = ({ children, width, direction, display, justify, height, align, margin, background }) => {
+export const Container = ({ children, width, direction, display, justify, height, align, margin, background, position, zIndex, top, left, padding, border }) => {
   
   return (
     <StyledContainer
@@ -24,11 +30,33 @@ export const Container = ({ children, width, direction, display, justify, height
       align={align}
       margin={margin}
       background={background}
+      position={position}
+      zIndex={zIndex}
+      top={top}
+      left={left}
+      padding={padding}
+      border={border}
       >
       {children}
     </StyledContainer>
   )
 }
+
+export const Paralax = styled.div`
+  background-image: ${({ url }) => `linear-gradient(to right, rgba(64, 59, 74, 0.52), rgba(231, 233, 187, 0.73)), url('${url}')`};
+  height: ${({height}) => height};
+  width: ${({ width}) => width};
+  background-attachment: fixed;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 20px 0;
+  position: ${({position}) => position};
+  display: ${({display}) => display};
+  justify-content: ${({justify}) => justify};
+  align-items: ${({align}) => align};
+  flex-direction: ${({direction}) => direction};
+`
 
 
 

@@ -2,12 +2,11 @@ import React from 'react'
 
 import { Container } from '../../styledComponents/containers'
 import { SubHeader } from '../../styledComponents/typography'
-import { secondaryColor } from '../../styledComponents/variables'
 
-const Ribbon = ({ children }) => {
+const Ribbon = ({ children, color }) => {
   return (
     <Container 
-      background={secondaryColor}
+      background={color}
       height='100px'
       width= '84%'
       display='flex'

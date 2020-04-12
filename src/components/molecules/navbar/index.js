@@ -1,15 +1,10 @@
 import PropTypes from "prop-types"
 import React from "react"
-import { Link } from "gatsby"
+import { Link, graphql, StaticQuery } from "gatsby"
 import { Navbar, NavDropdown } from 'react-bootstrap'
 
 import { LinksContainer, NavLink, Title, Brand } from './navbar.style'
 import { secondaryColor } from '../../styledComponents/variables'
-
-const onzeDienstLinks = [
-  { key: 0, title: 'Aanbod', path: '/onze-dienst/aanbod' },
-  { key: 1, title: 'Werking', path: '/onze-dienst/werking' },
-]
 
 const linkStyle = {
   textDecoration: `none`,
@@ -17,58 +12,71 @@ const linkStyle = {
 }
 
 const Header = ({ siteTitle }) => (
-  <Navbar bg="light" expand="lg" sticky='top'>
-    <div className='container'>
-      <Navbar.Brand>
-        <Brand>
-          <Link
-            style={linkStyle}
-            to='/'>
-            <Title id='head-brand'>
-              {siteTitle}
-            </Title>
-          </Link>
-        </Brand>
-      </Navbar.Brand>
-      <Navbar.Toggle />
-      <Navbar.Collapse>
-        <LinksContainer className="mr-auto">
-          <NavLink
-            className='nav-link'
-            to='/agenda'
-            activeStyle={{ color: secondaryColor }}
-          >
-            Agenda
-          </NavLink>
-          <NavLink
-            className='nav-link'
-            to='/calendar'
-            activeStyle={{ color: secondaryColor }}
-          >
-            Calendar
-          </NavLink>
-          <NavDropdown title="Therapies" id="basic-nav-dropdown">
-            {onzeDienstLinks.map(l =>
+  <StaticQuery
+    query={graphql`
+      query MyQuery {
+        therapies {
+          therapies {
+            name,
+            slug
+          }
+        }
+      }
+    `}
+    render={data => (
+      <Navbar bg="light" expand="lg" sticky='top'>
+        <div className='container'>
+          <Navbar.Brand>
+            <Brand>
+              <Link
+                style={linkStyle}
+                to='/'>
+                <Title id='head-brand'>
+                  {siteTitle}
+                </Title>
+              </Link>
+            </Brand>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+          <Navbar.Collapse>
+            <LinksContainer className="mr-auto">
               <NavLink
-                key={l.key}
-                className='dropdown-item'
-                to={l.path}
+                className='nav-link'
+                to='/agenda'
                 activeStyle={{ color: secondaryColor }}
               >
-                {l.title}
-              </NavLink>)}
-          </NavDropdown>
-          <NavLink
-            className='nav-link'
-            to='/contact'
-            activeStyle={{ color: secondaryColor }}
-          >
-            Contact
-          </NavLink>
-        </LinksContainer>
-      </Navbar.Collapse>
-    </div>
-  </Navbar>
+                Agenda
+              </NavLink>
+              <NavDropdown title="Therapies" id="basic-nav-dropdown">
+                {data.therapies.therapies.map((t, i) =>
+                  <NavLink
+                    key={i}
+                    className='dropdown-item'
+                    to={t.slug}
+                  >
+                    {t.name}
+                  </NavLink>)}
+              </NavDropdown>
+              <NavLink
+                className='nav-link'
+                to='/about'
+                activeStyle={{ color: secondaryColor }}
+              >
+                Over ons
+              </NavLink>
+              <NavLink
+                className='nav-link'
+                to='/contact'
+                activeStyle={{ color: secondaryColor }}
+              >
+                Contact
+              </NavLink>
+            </LinksContainer>
+          </Navbar.Collapse>
+        </div>
+      </Navbar>
+    )}
+  />
 )
 
 Header.propTypes = {
