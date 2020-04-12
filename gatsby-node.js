@@ -43,6 +43,25 @@ exports.sourceNodes = async ({
       contentDigest: createContentDigest(therapies),
     },
   })
+
+  // Therapists
+  const therapistsSnap = await firebase.therapists.get()
+  const therapists = therapistsSnap.docs.map(doc => {
+    let therapist = doc.data()
+    therapist.id = doc.id
+    return therapist
+  })
+
+  createNode({
+    therapists,
+    id: `therapists-build-time-data`,
+    parent: null,
+    children: [],
+    internal: {
+      type: `Therapists`,
+      contentDigest: createContentDigest(therapists),
+    },
+  })
 }
 
 exports.createPages = ({ graphql, actions }) => {

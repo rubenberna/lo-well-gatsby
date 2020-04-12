@@ -16,9 +16,11 @@ const StyledContainer = styled.div`
   left: ${({ left }) => left};
   padding: ${({ padding }) => padding};
   border: ${({ border }) => border};
+  box-shadow: ${({shadow}) => shadow};
+  border-radius: ${({radius}) => radius};
 `
 
-export const Container = ({ children, width, direction, display, justify, height, align, margin, background, position, zIndex, top, left, padding, border }) => {
+export const Container = ({ children, width, direction, display, justify, height, align, margin, background, position, zIndex, top, left, padding, border, shadow, radius }) => {
   
   return (
     <StyledContainer
@@ -36,6 +38,8 @@ export const Container = ({ children, width, direction, display, justify, height
       left={left}
       padding={padding}
       border={border}
+      shadow={shadow}
+      radius={radius}
       >
       {children}
     </StyledContainer>
