@@ -36,31 +36,27 @@ const ContactForm = () => {
   return (
     <Container width='80%'>
       {renderAlert()}
-      <form 
-        name="contact" 
-        method="post" 
-        netlify
-        onSubmit={handleSubmit}>
-        <input type="hidden" name="bot-field" />
+      <form
+        action="https://getform.io/f/8a48c06e-dfe2-481e-9f1d-fedb363e594f" method="POST">
         <input type="hidden" name="form-name" value="contact" />
         <div className="form-group">
           <label htmlFor="exampleFormControlInput1">Email adres</label>
-          <input 
-            disabled={disabled} 
-            type="email" 
-            name='email' 
-            className="form-control" 
-            id="email" 
-            placeholder="name@example.com" {...email}/>
+          <input
+            disabled={disabled}
+            type="email"
+            name="email"
+            className="form-control"
+            id="email"
+            placeholder="name@example.com" {...email} />
         </div>
         <div className="form-group">
           <label htmlFor="exampleFormControlTextarea1">Bericht</label>
-          <textarea 
-            disabled={disabled} 
-            name='message' 
-            className="form-control" 
-            id="message" 
-            rows="3" {...text}/>
+          <textarea
+            disabled={disabled}
+            name="message"
+            className="form-control"
+            id="message"
+            rows="3" {...text} />
         </div>
         <button disabled={disabled} type="submit" className="btn btn-primary">Verzenden</button>
       </form>
