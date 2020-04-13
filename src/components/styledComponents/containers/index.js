@@ -14,13 +14,15 @@ const StyledContainer = styled.div`
   z-index: ${({ zIndex }) => zIndex};
   top: ${({ top }) => top};
   left: ${({ left }) => left};
+  bottom: ${({ bottom }) => bottom};
   padding: ${({ padding }) => padding};
   border: ${({ border }) => border};
   box-shadow: ${({shadow}) => shadow};
   border-radius: ${({radius}) => radius};
+  max-width: ${({ maxWidth }) => maxWidth};
 `
 
-export const Container = ({ children, width, direction, display, justify, height, align, margin, background, position, zIndex, top, left, padding, border, shadow, radius }) => {
+export const Container = ({ children, width, direction, display, justify, height, align, margin, background, position, zIndex, top, left, bottom, padding, border, shadow, radius, maxWidth }) => {
   
   return (
     <StyledContainer
@@ -36,10 +38,12 @@ export const Container = ({ children, width, direction, display, justify, height
       zIndex={zIndex}
       top={top}
       left={left}
+      bottom={bottom}
       padding={padding}
       border={border}
       shadow={shadow}
       radius={radius}
+      maxWidth={maxWidth}
       >
       {children}
     </StyledContainer>

@@ -27,12 +27,16 @@ const TherapyTemplate = ({ pageContext }) => {
   return (
     <Layout>
       <SEO title={name} />
-      <Container padding='40px 190px' margin='0 auto'>
+      <Container
+        margin='0 auto'
+        maxWidth='960px'
+        padding='0 1.0875rem 1.45rem'
+      >
         <Container height='440px'>
           <Container position='relative'>
             <Paralax 
               url={photoUrl} 
-              width='60%'
+              width='100%'
               height='350px'
               position='absolute'
               display='flex'
@@ -45,7 +49,7 @@ const TherapyTemplate = ({ pageContext }) => {
             </Paralax>
             <Container 
               height='350px' 
-              width='60%' 
+              width='100%' 
               position='absolute'
               zIndex='-999'
               top='45px'
@@ -53,7 +57,7 @@ const TherapyTemplate = ({ pageContext }) => {
               background={tart}/>
           </Container>
         </Container>
-        <Container width='70%'>
+        <Container width='100%'>
           {renderParagraphs}
         </Container>
         <Paragraph weight='600'>Therapists: {renderTherapists()}</Paragraph>

@@ -11,3 +11,12 @@ body {
   font-family: 'Kaushan Script', cursive;
   font-size: 40px;
 }
+
+#footer-brand { 
+  font-family: 'Kaushan Script', cursive;
+  font-size: 30px;
+}
+
+main {
+  min-height: 90vh;
+}

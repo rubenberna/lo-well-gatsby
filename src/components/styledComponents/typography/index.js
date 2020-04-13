@@ -17,6 +17,7 @@ const StyledParagraph = styled.p`
 
 const StyledSubHeader = styled.h4`
   font-weight: ${({ weight }) => weight};
+  font-family: ${({ fontFamily }) => fontFamily};
   color: ${({ color }) => color};
   margin: ${({ margin }) => margin};
   font-size: ${({ size }) => size};
@@ -29,6 +30,11 @@ const StyledFooter = styled.span`
   margin: ${({ margin }) => margin};
   font-size: ${({ size }) => size};
   letter-spacing: 2px;
+`
+
+export const FooterDetails = styled.p`
+  font-size: 13px;
+  font-weight: 200;
 `
 
 export const Header = ({ children, weight, color, margin, size }) => (
@@ -53,13 +59,14 @@ export const Paragraph = ({ children, weight, color, margin, size }) => (
   </StyledParagraph>
 )
 
-export const SubHeader = ({ children, weight, color, margin, opacity, size }) => (
+export const SubHeader = ({ children, weight, color, margin, opacity, size, fontFamily }) => (
   <StyledSubHeader 
     weight={weight}
     color={color}
     margin={margin}
     opacity={opacity}
     size={size}
+    fontFamily={fontFamily}
     >
     {children}
   </StyledSubHeader>
