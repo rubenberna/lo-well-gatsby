@@ -64,13 +64,6 @@ const Header = ({ siteTitle }) => (
               >
                 Over ons
               </NavLink>
-              <NavLink
-                className='nav-link'
-                to='/contact'
-                activeStyle={{ color: secondaryColor }}
-              >
-                Contact
-              </NavLink>
             </LinksContainer>
           </Navbar.Collapse>
         </div>

@@ -12,9 +12,7 @@ const About = ({ data }) => {
     <Layout>
       <SEO title="About" />
       <Ribbon color={secondaryColor}>Wie zijn wij</Ribbon>
-      <div className='container'>
-        <AboutBanner therapists={therapists}/>
-      </div>
+      <AboutBanner therapists={therapists}/>
     </Layout>
   )
 }

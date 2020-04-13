@@ -4,6 +4,7 @@ import SEO from "../components/seo"
 import Layout from '../components/layout'
 import { Header, SubHeader, Paragraph } from '../components/styledComponents/typography'
 import { Container, Paralax } from '../components/styledComponents/containers'
+import { tart } from '../components/styledComponents/variables'
 
 const TherapyTemplate = ({ pageContext }) => {
   console.log(pageContext);
@@ -25,7 +26,7 @@ const TherapyTemplate = ({ pageContext }) => {
   
   return (
     <Layout>
-      <SEO title="Therapies" />
+      <SEO title={name} />
       <Container padding='40px 190px' margin='0 auto'>
         <Container height='440px'>
           <Container position='relative'>
@@ -49,7 +50,7 @@ const TherapyTemplate = ({ pageContext }) => {
               zIndex='-999'
               top='45px'
               left='40px'
-              background='#bdbdbd'/>
+              background={tart}/>
           </Container>
         </Container>
         <Container width='70%'>

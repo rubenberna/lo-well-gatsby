@@ -1,13 +1,13 @@
 import React from 'react'
 import { Container } from '../../styledComponents/containers'
 import { StyledImage } from '../../styledComponents/styledImages'
-import Intro from '../../molecules/intro'
+import Intro from '../intro'
 
 const TherapistCard = ({ therapist }) => {
   console.log(therapist);
   
   return (
-    <Container 
+    <Container
       margin='30px 0' 
       display='flex'
       padding='39px'
