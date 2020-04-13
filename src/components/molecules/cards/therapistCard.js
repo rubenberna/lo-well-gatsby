@@ -1,8 +1,7 @@
 import React from 'react'
 import { Container } from '../../styledComponents/containers'
+import { StyledImage } from '../../styledComponents/styledImages'
 import Intro from '../intro'
-
-import './style.css'
 
 const TherapistCard = ({ therapist }) => (
   <Container
@@ -11,10 +10,12 @@ const TherapistCard = ({ therapist }) => (
     padding='39px'
     radius='4px'
     >
-    <img 
+    <StyledImage 
       src={therapist.photoUrl} 
       alt={therapist.name}
-      className='therapist-photo'
+      width='300px'
+      height='300px'
+      fit='contain'
       />
     <Intro>
       {{
