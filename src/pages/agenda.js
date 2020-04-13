@@ -10,7 +10,7 @@ import SEO from "../components/seo"
 const Agenda = ({ data }) => {
 
   const { events } = data.events
-  const eventsList = events.map((ev, i) => <AgendaBanner key={i} event={ev} number={i}/>)
+  const eventsList = events.map((ev, i) => <AgendaBanner key={i} event={ev} number={i} last={events.length}/>)
   
   return (
     <Layout>

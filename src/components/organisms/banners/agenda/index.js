@@ -6,9 +6,11 @@ import { Paragraph } from '../../../styledComponents/typography'
 import Intro from '../../../molecules/intro'
 import { ImageFrame } from '../../../molecules/imgFrame'
 
-const AgendaBanner = ({ event, number }) => {
+const AgendaBanner = ({ event, number, last }) => {
 
   const even = !!number % 2 === 0  
+  
+  console.log(number, last);
   
   return (
     <div className='ui container'>
@@ -49,7 +51,7 @@ const AgendaBanner = ({ event, number }) => {
           <ImageFrame photoUrl={event.photoUrl}/>
         </Container>
       </Container>
-      <hr/>
+      { number !== (last -1) && <hr/>}
     </div>
   )
 }
