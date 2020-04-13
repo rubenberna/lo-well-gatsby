@@ -27,16 +27,16 @@ const Footer = () => {
           <Container display='flex' direction='column' width='20%' align='center'>
             <Paragraph>Greta Lowel</Paragraph>
             <FooterDetails>+32 (0)485649035</FooterDetails>
-            <FooterDetails style={noMargin}><a href='mailto:greta.lowel@hotmail.com'>greta.lowel@hotmail.com</a></FooterDetails>
+            <FooterDetails style={noMargin}><a href='mailto:greta.lowel@hotmail.com' target='_blank' rel="noopener noreferrer">greta.lowel@hotmail.com</a></FooterDetails>
           </Container>
           <Container display='flex' direction='column' width='20%' align='center'>
             <Paragraph>Hilde Lowel</Paragraph>
             <FooterDetails>+32 (0)47879338</FooterDetails>
-            <FooterDetails style={noMargin}><a href='mailto:hilde.lowel@gmail.com'>hilde.lowel@gmail.com</a></FooterDetails>
+            <FooterDetails style={noMargin}><a href='mailto:hilde.lowel@gmail.com' target='_blank' rel="noopener noreferrer">hilde.lowel@gmail.com</a></FooterDetails>
           </Container>
           <Container display='flex' direction='column' width='20%' align='center'>
             <Paragraph>Follow us</Paragraph>
-            <a href='https://www.facebook.com/groups/443325126249119/' target='_blank'><StyledImage src={FBLogo} alt='fb' width='30px' /></a>
+            <a href='https://www.facebook.com/groups/443325126249119/' target='_blank' rel="noopener noreferrer"><StyledImage src={FBLogo} alt='fb' width='30px' /></a>
           </Container>
         </Container>
       </Container>
