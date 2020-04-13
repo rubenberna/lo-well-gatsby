@@ -39,8 +39,7 @@ const ContactForm = () => {
       <form 
         name="contact" 
         method="post" 
-        data-netlify="true" 
-        data-netlify-honeypot="bot-field"
+        netlify
         onSubmit={handleSubmit}>
         <input type="hidden" name="bot-field" />
         <input type="hidden" name="form-name" value="contact" />
@@ -63,7 +62,7 @@ const ContactForm = () => {
             id="message" 
             rows="3" {...text}/>
         </div>
-        <button type="submit" className="btn btn-primary">Verzenden</button>
+        <button disabled={disabled} type="submit" className="btn btn-primary">Verzenden</button>
       </form>
     </Container>
   )

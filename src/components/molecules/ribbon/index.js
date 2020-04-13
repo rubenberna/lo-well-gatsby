@@ -12,7 +12,7 @@ const Ribbon = ({ children, color }) => {
       display='flex'
       align='center'
       >
-      <SubHeader margin='0 0 0 110px' weight='300'>
+      <SubHeader margin='0 0 0 110px' weight='200'>
         {children}
       </SubHeader>
     </Container>

@@ -42,6 +42,13 @@ const Header = ({ siteTitle }) => (
             <LinksContainer className="mr-auto">
               <NavLink
                 className='nav-link'
+                to='/'
+                activeStyle={{ color: secondaryColor }}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                className='nav-link'
                 to='/agenda'
                 activeStyle={{ color: secondaryColor }}
               >
