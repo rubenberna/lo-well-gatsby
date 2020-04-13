@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Alert } from 'react-bootstrap'
+import * as emailjs from 'emailjs-com';
 
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers'
@@ -11,6 +12,10 @@ const ContactForm = () => {
   const [showAlert, setShowAlert] = useState(false)
   const [disabled, setDisabled] = useState(false)
 
+  let template_id = process.env.GATSBY_EMAILJS_TEMPLATEID
+  let user_id = process.env.GATSBY_EMAILJS_USERID
+  let service_id = process.env.GATSBY_EMAILJS_SERVICEID
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if(!email.value || !text.value) {
@@ -21,7 +26,18 @@ const ContactForm = () => {
       setError(false)
       setShowAlert(true)
       setDisabled(true)
+      sendEmail()
     }
+  }
+
+  const sendEmail = () => {
+    const template_params = {
+      email: email.value,
+      message: text.value,
+    }
+    emailjs.send(service_id, template_id, template_params, user_id)
+      .then(res => console.log('success', res.status, res.text))
+      .catch(e => console.log('error', e))
   }
 
   const renderAlert = () => {
@@ -36,8 +52,7 @@ const ContactForm = () => {
   return (
     <Container width='80%'>
       {renderAlert()}
-      <form
-        action="https://getform.io/f/8a48c06e-dfe2-481e-9f1d-fedb363e594f" method="POST">
+      <form onSubmit={handleSubmit}>
         <input type="hidden" name="form-name" value="contact" />
         <div className="form-group">
           <label htmlFor="exampleFormControlInput1">Email adres</label>
