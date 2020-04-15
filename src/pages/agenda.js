@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql } from 'gatsby'
+import moment from 'moment'
 
 import AgendaBanner from '../components/organisms/banners/agenda'
 import Ribbon from '../components/molecules/ribbon'
@@ -10,7 +11,9 @@ import SEO from "../components/seo"
 const Agenda = ({ data }) => {
 
   const { events } = data.events
-  const eventsList = events.map((ev, i) => <AgendaBanner key={ev.id} event={ev} number={i} last={events.length}/>)
+  // Only future or regular events
+  const filteredEvents = events.filter( ev => (moment(ev.date).format() >= moment().format()) || (ev.regular))
+  const eventsList = filteredEvents.map((ev, i) => <AgendaBanner key={ev.id} event={ev} number={i} last={filteredEvents.length}/>)
   
   return (
     <Layout>
@@ -36,6 +39,7 @@ export const eventsQuery = graphql`
           location
           weekdays
         }
+        price
       }
     }
   }

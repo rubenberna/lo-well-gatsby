@@ -4,6 +4,7 @@ import * as emailjs from 'emailjs-com';
 
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers'
+import { SubHeader } from '../../styledComponents/typography'
 
 const ContactForm = () => {
   const email = useFormInput('')
@@ -48,9 +49,9 @@ const ContactForm = () => {
     }  
   }
 
-
   return (
     <Container width='80%'>
+      <SubHeader margin='0 0 20px 0' weight='200'>What's on your mind?</SubHeader>
       {renderAlert()}
       <form onSubmit={handleSubmit}>
         <input type="hidden" name="form-name" value="contact" />

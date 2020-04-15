@@ -3,8 +3,9 @@ import React from 'react'
 import SEO from "../components/seo"
 import Layout from '../components/layout'
 import { Header, SubHeader, Paragraph } from '../components/styledComponents/typography'
+import Ribbon from '../components/molecules/ribbon'
 import { Container, Paralax } from '../components/styledComponents/containers'
-import { tart } from '../components/styledComponents/variables'
+import { secondaryColor } from '../components/styledComponents/variables'
 
 const TherapyTemplate = ({ pageContext }) => {
   console.log(pageContext);
@@ -27,6 +28,7 @@ const TherapyTemplate = ({ pageContext }) => {
   return (
     <Layout>
       <SEO title={name} />
+      <Ribbon color={secondaryColor}>“I have lived with several Zen masters – all of them cats.”</Ribbon>
       <Container
         margin='0 auto'
         maxWidth='960px'
@@ -47,14 +49,6 @@ const TherapyTemplate = ({ pageContext }) => {
               <SubHeader color='#fff' opacity='0.8'>{name}</SubHeader>
               <Header color='#fff' weight='600'>{heading}</Header>
             </Paralax>
-            <Container 
-              height='350px' 
-              width='100%' 
-              position='absolute'
-              zIndex='-999'
-              top='45px'
-              left='40px'
-              background={tart}/>
           </Container>
         </Container>
         <Container width='100%'>

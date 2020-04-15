@@ -51,7 +51,7 @@ export const Container = ({ children, width, direction, display, justify, height
 }
 
 export const Paralax = styled.div`
-  background-image: ${({ url }) => `linear-gradient(to right, rgba(64, 59, 74, 0.52), rgba(231, 233, 187, 0.73)), url('${url}')`};
+  background-image: ${({ url }) => `url('${url}')`};
   height: ${({height}) => height};
   width: ${({ width}) => width};
   background-attachment: fixed;

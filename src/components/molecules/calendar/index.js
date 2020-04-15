@@ -15,6 +15,7 @@ const Calendar = ({ event }) => {
         padding='0 15px'
         margin='0 20px'
         border='solid'
+        height='100%'
       >
         <Paragraph
           weight='100'
@@ -33,6 +34,7 @@ const Calendar = ({ event }) => {
         padding='0 15px'
         margin='0 20px'
         border='solid'
+        height='100%'
       >
         <Paragraph
           weight='600'
