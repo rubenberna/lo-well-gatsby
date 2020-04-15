@@ -1,17 +1,15 @@
 import React from 'react'
-import moment from 'moment'
 
 import { Container } from '../../../styledComponents/containers'
-import { Paragraph } from '../../../styledComponents/typography'
+import Calendar from '../../../molecules/calendar'
+import Address from '../../../molecules/address'
 import Intro from '../../../molecules/intro'
 import { ImageFrame } from '../../../molecules/imgFrame'
 
 const AgendaBanner = ({ event, number, last }) => {
 
   const even = !!number % 2 === 0  
-  
-  console.log(number, last);
-  
+
   return (
     <div className='ui container'>
       <Container 
@@ -21,22 +19,7 @@ const AgendaBanner = ({ event, number, last }) => {
         width='100%' 
         margin='50px 0' 
         direction={even ? 'row' : 'row-reverse'}>
-        <Container
-          display='flex'
-          direction='column'
-          align='center'
-          padding='0 15px'
-          margin='0 20px'
-          border='solid'
-          >
-          <Paragraph 
-            weight='600'
-            margin='0' 
-            size='30px'>
-            {moment(event.date).format("MMM").toUpperCase()}
-          </Paragraph>
-          <Paragraph>{moment(event.date).format("Do")}</Paragraph>
-        </Container>
+        <Calendar event={event}/>
         <Intro>
           {{
             header: event.name,
@@ -44,7 +27,7 @@ const AgendaBanner = ({ event, number, last }) => {
             paragraph: event.description,
             display: 'flex',
             justify: even ? 'flex-start' : 'flex-end',
-            footer: event.location
+            footer: <Address event={event}/>
           }}
         </Intro>
         <Container>

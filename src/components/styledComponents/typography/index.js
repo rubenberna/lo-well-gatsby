@@ -13,6 +13,7 @@ const StyledParagraph = styled.p`
   color: ${({ color }) => color};
   margin: ${({margin}) => margin};
   font-size: ${({size}) => size};
+  text-align: ${({align}) => align};
 `
 
 const StyledSubHeader = styled.h4`
@@ -48,12 +49,13 @@ export const Header = ({ children, weight, color, margin, size }) => (
   </StyledHeader>
 ) 
 
-export const Paragraph = ({ children, weight, color, margin, size }) => (
+export const Paragraph = ({ children, weight, color, margin, size, align }) => (
   <StyledParagraph 
     weight={weight}
     color={color}
     margin={margin}
     size={size}
+    align={align}
     >
     {children}
   </StyledParagraph>
