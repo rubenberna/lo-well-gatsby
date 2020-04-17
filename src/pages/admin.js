@@ -19,7 +19,6 @@ const Admin = ({ data }) => {
     <Layout>
       <Container position='relative'>
         <Container position='absolute' right='20px' >
-          {currentUser && `Hi, ${currentUser.email}`}
         </Container>
         {conditionalRender()}
       </Container>
