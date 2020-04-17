@@ -51,7 +51,7 @@ const ContactForm = () => {
 
   return (
     <Container width='80%'>
-      <SubHeader margin='0 0 20px 0' weight='200'>What's on your mind?</SubHeader>
+      <SubHeader margin='0 0 20px 0' weight='200'>Get in touch ;)</SubHeader>
       {renderAlert()}
       <form onSubmit={handleSubmit}>
         <input type="hidden" name="form-name" value="contact" />

@@ -5,14 +5,14 @@ import Ribbon from '../components/molecules/ribbon'
 import { secondaryColor } from '../components/styledComponents/variables'
 import AboutBanner from '../components/organisms/banners/about'
 
-const About = ({ data }) => {
+const About = ({ data, location }) => {
   const { therapists } = data.therapists
   
   return(
     <Layout>
       <SEO title="About" />
       <Ribbon color={secondaryColor}>Wie zijn wij</Ribbon>
-      <AboutBanner therapists={therapists}/>
+      <AboutBanner therapists={therapists} linkedProps={location.state.active}/>
     </Layout>
   )
 }

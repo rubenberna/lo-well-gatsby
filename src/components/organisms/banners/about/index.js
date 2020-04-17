@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Container } from '../../../styledComponents/containers'
 import  Presentation from '../../../molecules/presentation'
-import Controls from '../../../molecules/controls'
+import Controls from '../../../molecules/controls/about'
 
 
-const AboutBanner = ({ therapists }) => {
-  const [active, setActive] = useState(therapists[0].name)
-  const [presentationObj, setPresentationObj] = useState(therapists[0])
+const AboutBanner = ({ therapists, linkedProps }) => {  
+  const [active, setActive] = useState(linkedProps || therapists[0].name)
+  const [presentationObj, setPresentationObj] = useState(linkedProps || therapists[0])
 
   useEffect(() => {
     if (active === 'contact') setPresentationObj('contact')

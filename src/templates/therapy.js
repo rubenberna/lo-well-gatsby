@@ -6,9 +6,9 @@ import { Header, SubHeader, Paragraph } from '../components/styledComponents/typ
 import Ribbon from '../components/molecules/ribbon'
 import { Container, Paralax } from '../components/styledComponents/containers'
 import { secondaryColor } from '../components/styledComponents/variables'
+import { Link } from 'gatsby'
 
 const TherapyTemplate = ({ pageContext }) => {
-  console.log(pageContext);
   const {
     name,
     heading,
@@ -54,7 +54,9 @@ const TherapyTemplate = ({ pageContext }) => {
         <Container width='100%'>
           {renderParagraphs}
         </Container>
-        <Paragraph weight='600'>Therapists: {renderTherapists()}</Paragraph>
+        <Link to='/about' state={{ active: 'contact' }}>
+          <Paragraph weight='600'>Therapists: {renderTherapists()}</Paragraph>
+        </Link>
       </Container>
     </Layout>
   )

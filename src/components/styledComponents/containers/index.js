@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
   z-index: ${({ zIndex }) => zIndex};
   top: ${({ top }) => top};
   left: ${({ left }) => left};
+  right: ${({ right }) => right};
   bottom: ${({ bottom }) => bottom};
   padding: ${({ padding }) => padding};
   border: ${({ border }) => border};
@@ -22,7 +23,7 @@ const StyledContainer = styled.div`
   max-width: ${({ maxWidth }) => maxWidth};
 `
 
-export const Container = ({ children, width, direction, display, justify, height, align, margin, background, position, zIndex, top, left, bottom, padding, border, shadow, radius, maxWidth }) => {
+export const Container = ({ children, width, direction, display, justify, height, align, margin, background, position, zIndex, top, left, right, bottom, padding, border, shadow, radius, maxWidth }) => {
   
   return (
     <StyledContainer
@@ -38,6 +39,7 @@ export const Container = ({ children, width, direction, display, justify, height
       zIndex={zIndex}
       top={top}
       left={left}
+      right={right}
       bottom={bottom}
       padding={padding}
       border={border}

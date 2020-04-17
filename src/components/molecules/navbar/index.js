@@ -54,12 +54,15 @@ const Header = ({ siteTitle }) => (
               >
                 Agenda
               </NavLink>
-              <NavDropdown title="Therapies" id="basic-nav-dropdown">
+              <NavDropdown 
+                title="Therapies" 
+                id="basic-nav-dropdown">
                 {data.therapies.therapies.map((t, i) =>
                   <NavLink
                     key={i}
                     className='dropdown-item'
                     to={t.slug}
+                    activeStyle={{ color: secondaryColor }}
                   >
                     {t.name}
                   </NavLink>)}

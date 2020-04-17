@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from "gatsby"
 
 const StyledHeader = styled.h1`
   font-weight: ${({weight}) => weight};
@@ -85,3 +86,7 @@ export const Footer = ({ children, weight, color, margin, size }) => (
     {children}
   </StyledFooter>
 )
+
+export const StyledLink = styled(Link)`
+  text-decoration: none !important;
+`
