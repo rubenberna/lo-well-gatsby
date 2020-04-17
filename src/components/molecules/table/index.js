@@ -5,8 +5,7 @@ import { SubHeader } from '../../styledComponents/typography'
 import { danger, warning } from '../../styledComponents/variables'
 import { STable, StyledTr, MainTd, ActionTd} from './table.style'
 
-const ContentTable = ({ data }) => {
-  console.log(data);
+const ContentTable = ({ data, handleEdit, handleDelete, active }) => {
 
   const renderTable = () => (
     data.map(t => (
@@ -14,14 +13,18 @@ const ContentTable = ({ data }) => {
         <MainTd width='60%'>{t.name}</MainTd>
         <ActionTd 
           color={warning}
+          onClick={() => handleEdit(t)}
           >
           Edit
         </ActionTd>
+        {active !== 'about' &&
         <ActionTd 
           color={danger}
+          onClick={() => handleDelete(t)}
           >
           Delete
         </ActionTd>
+        }
       </StyledTr>
     ))
   )
@@ -45,10 +48,3 @@ const ContentTable = ({ data }) => {
 }
 
 export default ContentTable
-
-      // <StyledList>
-      //   {data.map(t => 
-      //     <StyledLi key={t.id}>
-      //     {t.name}{' '}Edit{' '}Delete
-      //   </StyledLi>)}
-      // </StyledList>
