@@ -6,7 +6,7 @@ import Ribbon from '../components/molecules/ribbon'
 import { secondaryColor } from '../components/styledComponents/variables'
 import AboutBanner from '../components/organisms/banners/about'
 
-const About = ({ data }) => {
+const About = ({ data, location }) => {
   const { therapists } = data.therapists
   
   return(
