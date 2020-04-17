@@ -8,7 +8,7 @@ import Login from '../components/organisms/banners/login'
 import Dashboard from '../components/organisms/banners/dashboard'
 
 const Admin = ({ data }) => {
-  const { currentUser } = useContext(AuthContext)
+  // const { currentUser } = useContext(AuthContext)
 
   const conditionalRender = () => {
     if (!currentUser) return <Login />
