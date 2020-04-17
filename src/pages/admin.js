@@ -20,7 +20,7 @@ const Admin = ({ data }) => {
       <Container position='relative'>
         <Container position='absolute' right='20px' >
         </Container>
-        {conditionalRender()}
+
       </Container>
     </Layout>
   )
