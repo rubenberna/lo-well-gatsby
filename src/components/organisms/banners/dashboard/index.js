@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 
-import { actionsHub } from '../../../../services/hub'
-import {
-  UPDATE_EVENT,
-  DELETE_EVENT,
-  UPDATE_THERAPY,
-  DELETE_THERAPY,
-  UPDATE_THERAPIST
-} from '../../../../services/types'
+// import { actionsHub } from '../../../../services/hub'
+// import {
+//   UPDATE_EVENT,
+//   DELETE_EVENT,
+//   UPDATE_THERAPY,
+//   DELETE_THERAPY,
+//   UPDATE_THERAPIST
+// } from '../../../../services/types'
 import { Container } from '../../../styledComponents/containers'
 import ControlsDashboard from '../../../molecules/controls/dashboard'
 import ContentTable from '../../../molecules/table'
@@ -28,23 +28,23 @@ const Dashboard = ({ data }) => {
   }, [active, events, therapists, therapies])
   
   const handleEdit = (obj) => {
-    let type = active === 'events' ? UPDATE_EVENT
-      : active === 'therapies' ? UPDATE_THERAPY
-        : UPDATE_THERAPIST
+    // let type = active === 'events' ? UPDATE_EVENT
+    //   : active === 'therapies' ? UPDATE_THERAPY
+    //     : UPDATE_THERAPIST
 
-    actionsHub({
-      type,
-      payload: obj
-    })
+    // actionsHub({
+    //   type,
+    //   payload: obj
+    // })
   }
 
   const handleDelete = (obj) => {
-    let type = active === 'events' ? DELETE_EVENT : DELETE_THERAPY
+    // let type = active === 'events' ? DELETE_EVENT : DELETE_THERAPY
 
-    actionsHub({
-      type,
-      payload: obj
-    })
+    // actionsHub({
+    //   type,
+    //   payload: obj
+    // })
   }
   
   return (
