@@ -1,4 +1,4 @@
-const firebase = require('./firebaseInit')
+const firebase = require('./src/services/firebase')
 const path = require(`path`)
 
 exports.sourceNodes = async ({

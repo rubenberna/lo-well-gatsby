@@ -1,5 +1,5 @@
-import firebase from 'firebase'
-import "firebase/auth"
+const firebase = require('firebase')
+require("firebase/auth") 
 
 const firebaseApp = firebase.initializeApp({
   apiKey: process.env.GATSBY_apiKey,
@@ -16,12 +16,12 @@ const db = firebase.firestore();
 const events = db.collection('events')
 const therapies = db.collection('therapies')
 const therapists = db.collection('therapists')
-const storageRef = firebase.storage().ref('photos');
+// const storageRef = firebase.storage().ref('photos');
 
-export {
+module.exports = {
   firebaseApp,
   events,
   therapies,
   therapists,
-  storageRef
+  // storageRef
 }
