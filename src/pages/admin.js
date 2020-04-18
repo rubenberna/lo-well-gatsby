@@ -10,10 +10,10 @@ import Dashboard from '../components/organisms/banners/dashboard'
 const Admin = ({ data }) => {
   // const { currentUser } = useContext(AuthContext)
 
-  const conditionalRender = () => {
-    if (!currentUser) return <Login />
-    else return <Dashboard data={data}/>
-  }
+  // const conditionalRender = () => {
+  //   if (!currentUser) return <Login />
+  //   else return <Dashboard data={data}/>
+  // }
 
   return (
     <Layout>
