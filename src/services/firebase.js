@@ -2,26 +2,32 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
+import configValues from './firebaseConfig'
 
-const firebaseApp = firebase.initializeApp({
-  apiKey: process.env.GATSBY_apiKey,
-  authDomain: process.env.GATSBY_authDomain,
-  databaseURL: process.env.GATSBY_databaseURL,
-  projectId: process.env.GATSBY_projectId,
-  storageBucket: process.env.GATSBY_storageBucket,
-  messagingSenderId: process.env.GATSBY_messagingSenderId,
-  appId: process.env.GATSBY_appId,
-  measurementId: process.env.GATSBY_measurementId
-})
+const lazy = (fn) => {
+  let isLoaded = false
+  let result
+  return () => {
+    if (!isLoaded) {
+      isLoaded = true
+      result = fn()
+    }
+    return result
+  }
+}
+const firebaseApp = lazy(()=> firebase.initializeApp(configValues))
+const auth = lazy(() => firebaseApp().auth())
 
-const db = firebase.firestore();
-const events = db.collection('events')
-const therapies = db.collection('therapies')
-const therapists = db.collection('therapists')
-const storageRef = firebase.storage().ref('photos');
+const db = lazy(() => firebase.firestore())
+
+const events = lazy(() => db.collection('events'))
+const therapies = lazy(() => db.collection('therapies'))
+const therapists = lazy(() => db.collection('therapists'))
+const storageRef = lazy(() => firebase.storage().ref('photos'))
 
 export {
   firebaseApp,
+  auth,
   events,
   therapies,
   therapists,
