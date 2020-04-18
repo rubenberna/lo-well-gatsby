@@ -1,12 +1,12 @@
 import React, { useState, useCallback } from 'react'
 import { Alert } from 'react-bootstrap'
 
-import { firebaseApp } from '../../../../services/firebase'
+import { auth } from '../../../../services/firebase'
 import { useFormInput } from '../../../../hooks/index'
 import { Container } from '../../../styledComponents/containers'
 import { SubHeader } from '../../../styledComponents/typography'
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const email = useFormInput('')
   const password = useFormInput('')
   const [showAlert, setShowAlert] = useState(false)
@@ -14,13 +14,13 @@ const Login = () => {
   const handleLogin = useCallback(
     async () => {
       try {
-        await firebaseApp
-          .auth()
+        await auth()
           .signInWithEmailAndPassword(email.value.toLowerCase(), password.value)
+        setUser(auth().currentUser)
       } catch (e) {
         alert(e)
       }
-    }, [email.value, password.value]
+    }, [email.value, password.value, setUser]
   );
 
   const handleSubmit = (e) => {

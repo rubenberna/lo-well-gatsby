@@ -1,26 +1,27 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 import { graphql } from 'gatsby'
 
-import { AuthContext } from '../context/auth'
+import { auth } from '../services/firebase'
 import { Container } from '../components/styledComponents/containers'
 import Layout from '../components/layout'
 import Login from '../components/organisms/banners/login'
 import Dashboard from '../components/organisms/banners/dashboard'
 
 const Admin = ({ data }) => {
-  // const { currentUser } = useContext(AuthContext)
+  const [user, setUser] = useState(auth().currentUser)
 
   const conditionalRender = () => {
-    // if (!currentUser) return <Login />
-    // else return <Dashboard data={data}/>
+    if (!user) return <Login setUser={setUser}/>
+    else return <Dashboard data={data}/>
   }
 
   return (
     <Layout>
       <Container position='relative'>
         <Container position='absolute' right='20px' >
+        {user && user.email}
         </Container>
-        <Dashboard data={data} />
+        {conditionalRender()}
       </Container>
     </Layout>
   )
