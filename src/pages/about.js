@@ -8,6 +8,8 @@ import AboutBanner from '../components/organisms/banners/about'
 
 const About = ({ data, location }) => {
   const { therapists } = data.therapists
+  console.log(location);
+  
   
   return(
     <Layout>

@@ -16,12 +16,12 @@ const db = firebase.firestore();
 const events = db.collection('events')
 const therapies = db.collection('therapies')
 const therapists = db.collection('therapists')
-// const storageRef = firebase.storage().ref('photos');
+const storageRef = firebase.storage().ref('photos');
 
 export {
   firebaseApp,
   events,
   therapies,
   therapists,
-  // storageRef
+  storageRef
 }
