@@ -8,11 +8,11 @@ import Login from '../components/organisms/banners/login'
 import Dashboard from '../components/organisms/banners/dashboard'
 
 const Admin = ({ data }) => {
-  const { currentUser } = useContext(AuthContext)
+  // const { currentUser } = useContext(AuthContext)
 
   const conditionalRender = () => {
-    if (!currentUser) return <Login />
-    else return <Dashboard data={data}/>
+    // if (!currentUser) return <Login />
+    // else return <Dashboard data={data}/>
   }
 
   return (
@@ -20,7 +20,7 @@ const Admin = ({ data }) => {
       <Container position='relative'>
         <Container position='absolute' right='20px' >
         </Container>
-          {conditionalRender()}
+        <Dashboard data={data} />
       </Container>
     </Layout>
   )
