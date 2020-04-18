@@ -1,5 +1,7 @@
-import firebase from 'firebase'
-import "firebase/auth"
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+import 'firebase/storage';
 
 const firebaseApp = firebase.initializeApp({
   apiKey: process.env.GATSBY_apiKey,
