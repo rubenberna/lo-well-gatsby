@@ -1,14 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { graphql } from 'gatsby'
 
-import { auth } from '../services/firebase'
+import { firebaseApp } from '../services/firebase'
 import { Container } from '../components/styledComponents/containers'
 import Layout from '../components/layout'
 import Login from '../components/organisms/banners/login'
 import Dashboard from '../components/organisms/banners/dashboard'
 
 const Admin = ({ data }) => {
-  const [user, setUser] = useState(auth().currentUser)
+  const [user, setUser] = useState('')
+
+  useEffect(() => {
+    firebaseApp.auth().onAuthStateChanged(setUser);
+  }, []);
 
   const conditionalRender = () => {
     if (!user) return <Login setUser={setUser}/>

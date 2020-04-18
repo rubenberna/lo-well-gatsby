@@ -15,19 +15,17 @@ const lazy = (fn) => {
     return result
   }
 }
-const firebaseApp = lazy(()=> firebase.initializeApp(configValues))
-const auth = lazy(() => firebaseApp().auth())
+const firebaseApp = firebase.initializeApp(configValues)
 
-const db = lazy(() => firebase.firestore())
+const db = firebase.firestore()
 
-const events = lazy(() => db.collection('events'))
-const therapies = lazy(() => db.collection('therapies'))
-const therapists = lazy(() => db.collection('therapists'))
-const storageRef = lazy(() => firebase.storage().ref('photos'))
+const events = db.collection('events')
+const therapies = db.collection('therapies')
+const therapists = db.collection('therapists')
+const storageRef = firebase.storage().ref('photos')
 
 export {
   firebaseApp,
-  auth,
   events,
   therapies,
   therapists,
