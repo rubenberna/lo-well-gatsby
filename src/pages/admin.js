@@ -8,7 +8,7 @@ import Login from '../components/organisms/banners/login'
 import Dashboard from '../components/organisms/banners/dashboard'
 
 const Admin = ({ data }) => {
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState('')  
 
   useEffect(() => {
     firebaseApp.auth().onAuthStateChanged(setUser);

@@ -31,24 +31,41 @@ export const actionsHub = ({type, payload}) => {
   
   switch (type) {
     case CREATE_EVENT:
-      return createEvent(payload)
+      createEvent(payload)
+      return rebuildData()
     case UPDATE_EVENT:
-      return updateEvent(payload)
+      updateEvent(payload)
+      return rebuildData()
     case DELETE_EVENT:      
-      return deleteEvent(payload)
+      deleteEvent(payload)
+      return rebuildData()
     case CREATE_THERAPY:
-      return createTherapy(payload)
+      createTherapy(payload)
+      return rebuildData()
     case UPDATE_THERAPY:
-      return updateTherapy(payload)
+      updateTherapy(payload)
+      return rebuildData()
     case DELETE_THERAPY:
-      return deleteTherapy(payload)
+      deleteTherapy(payload)
+      return rebuildData()
     case CREATE_THERAPIST:
-      return createTherapist(payload)
+      createTherapist(payload)
+      return rebuildData()
     case UPDATE_THERAPIST:
-      return updateTherapist(payload)
+      updateTherapist(payload)
+      return rebuildData()
     default:
       break;
   }
+}
+
+const rebuildData = () => {
+  let env = process.env.NODE_ENV
+  console.log(env);
+  
+  if (env === 'development') return fetch('http://localhost:8000/__refresh', { method: 'POST'})
+
+  else return fetch('https://api.netlify.com/build_hooks/5e9b2461b6c58b5b9755da1f', { method: 'POST'})
 }
 
 export const uploadPhoto = async photo => {

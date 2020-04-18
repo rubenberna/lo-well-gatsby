@@ -4,17 +4,6 @@ import 'firebase/auth';
 import 'firebase/storage';
 import configValues from './firebaseConfig'
 
-const lazy = (fn) => {
-  let isLoaded = false
-  let result
-  return () => {
-    if (!isLoaded) {
-      isLoaded = true
-      result = fn()
-    }
-    return result
-  }
-}
 const firebaseApp = firebase.initializeApp(configValues)
 
 const db = firebase.firestore()
