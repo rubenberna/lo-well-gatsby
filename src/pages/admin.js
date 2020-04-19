@@ -6,6 +6,7 @@ import { Container } from '../components/styledComponents/containers'
 import Layout from '../components/layout'
 import Login from '../components/organisms/banners/login'
 import Dashboard from '../components/organisms/banners/dashboard'
+import StatusBoard from '../components/molecules/statusBoard'
 
 const Admin = ({ data }) => {
   const [user, setUser] = useState('')  
@@ -22,9 +23,7 @@ const Admin = ({ data }) => {
   return (
     <Layout>
       <Container position='relative'>
-        <Container position='absolute' right='20px' >
-        {user && user.email}
-        </Container>
+        <StatusBoard user={user}/>
         {conditionalRender()}
       </Container>
     </Layout>
