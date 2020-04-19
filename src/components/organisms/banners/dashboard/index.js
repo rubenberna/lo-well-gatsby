@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react'
 
 import { actionsHub } from '../../../../services/hub'
 import {
-  UPDATE_EVENT,
   DELETE_EVENT,
-  UPDATE_THERAPY,
   DELETE_THERAPY,
-  UPDATE_THERAPIST
 } from '../../../../services/types'
 import { Container } from '../../../styledComponents/containers'
 import ControlsDashboard from '../../../molecules/controls/dashboard'
 import ContentTable from '../../../molecules/table'
+import EditEvent from '../../../molecules/forms/editEvent'
+import EditTherapy from '../../../molecules/forms/editTherapy'
 
 const Dashboard = ({ data }) => {
   const { events } = data.events
@@ -19,6 +18,8 @@ const Dashboard = ({ data }) => {
 
   const [active, setActive] = useState('events')
   const [tableContent, setTableContent] = useState(events)
+  const [showForm, setShowForm] = useState('')
+  const [editableDoc, setEditableDoc] = useState('')
 
   
   useEffect(() => {
@@ -27,15 +28,9 @@ const Dashboard = ({ data }) => {
     if (active === 'about') setTableContent(therapists)
   }, [active, events, therapists, therapies])
   
-  const handleEdit = (obj) => {
-    let type = active === 'events' ? UPDATE_EVENT
-      : active === 'therapies' ? UPDATE_THERAPY
-        : UPDATE_THERAPIST
-
-    actionsHub({
-      type,
-      payload: obj
-    })
+  const handleEdit = ({formName, doc}) => {
+    setShowForm(formName)
+    setEditableDoc(doc)
   }
 
   const handleDelete = (obj) => {
@@ -46,6 +41,17 @@ const Dashboard = ({ data }) => {
       payload: obj
     })
   }
+
+  const renderForm = () => {
+    switch (showForm) {
+      case 'edit-events':
+        return <EditEvent event={editableDoc}/>
+      case 'edit-therapies':
+        return <EditTherapy therapy={editableDoc}/>
+      default:
+        break;
+    }
+  }
   
   return (
     <Container display='flex'>
@@ -55,6 +61,7 @@ const Dashboard = ({ data }) => {
         active={active}
         handleDelete={handleDelete} 
         handleEdit={handleEdit}/>
+      {renderForm() }
     </Container>
   )
 }

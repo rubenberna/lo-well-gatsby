@@ -13,7 +13,10 @@ const ContentTable = ({ data, handleEdit, handleDelete, active }) => {
         <MainTd width='60%'>{t.name}</MainTd>
         <ActionTd 
           color={warning}
-          onClick={() => handleEdit(t)}
+          onClick={() => handleEdit({
+            formName: `edit-${active}`,
+            doc: t
+          })}
           >
           Edit
         </ActionTd>
