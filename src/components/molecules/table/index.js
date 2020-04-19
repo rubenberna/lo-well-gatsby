@@ -33,13 +33,13 @@ const ContentTable = ({ data, handleEdit, handleDelete, active }) => {
   )
   
   return (
-    <Container display='flex' direction='column' width='100%' margin='40px 0 0 30px'>
+    <Container display='flex' direction='column' width='30%' margin='40px 0 0 30px'>
       <SubHeader>Title</SubHeader>
       <Container 
         border='solid'
         padding='14px'
         radius='8px'
-        width='35%'>
+        width='70%'>
         <STable>
           <tbody>
             {renderTable()}

@@ -14,7 +14,8 @@ const ControlsDashboard = ({ active, setActive }) => (
   <Container
     background='black'
     width='230px'
-    height='90vh'
+    minHeight='90vh'
+    height='inherit'
     display='flex'
     direction='column'
     padding='20px'

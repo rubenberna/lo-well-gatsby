@@ -9,6 +9,7 @@ const StyledContainer = styled.div`
   flex-direction: ${({direction}) => direction};
   justify-content: ${({justify}) => justify};
   align-items: ${({ align }) => align};
+  align-self: ${({ alignSelf }) => alignSelf};
   background: ${({ background }) => background};
   position: ${({ position }) => position};
   z-index: ${({ zIndex }) => zIndex};
@@ -21,9 +22,10 @@ const StyledContainer = styled.div`
   box-shadow: ${({shadow}) => shadow};
   border-radius: ${({radius}) => radius};
   max-width: ${({ maxWidth }) => maxWidth};
+  min-height: ${({ minHeight }) => minHeight};
 `
 
-export const Container = ({ children, width, direction, display, justify, height, align, margin, background, position, zIndex, top, left, right, bottom, padding, border, shadow, radius, maxWidth }) => {
+export const Container = ({ children, width, direction, display, justify, height, align, alignSelf, margin, background, position, zIndex, top, left, right, bottom, padding, border, shadow, radius, maxWidth, minHeight }) => {
   
   return (
     <StyledContainer
@@ -46,6 +48,8 @@ export const Container = ({ children, width, direction, display, justify, height
       shadow={shadow}
       radius={radius}
       maxWidth={maxWidth}
+      alignSelf={alignSelf}
+      minHeight={minHeight}
       >
       {children}
     </StyledContainer>
