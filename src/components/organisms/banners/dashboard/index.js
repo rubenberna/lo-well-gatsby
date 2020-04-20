@@ -52,7 +52,7 @@ const Dashboard = ({ data }) => {
       case 'edit-events':
         return <EditEvent event={editableDoc}/>
       case 'edit-therapies':
-        return <EditTherapy therapy={editableDoc} closeForm={setShowForm}/>
+        return <EditTherapy therapy={editableDoc} closeForm={setShowForm} therapists={therapists}/>
       default:
         break;
     }

@@ -40,6 +40,11 @@ export const FooterDetails = styled.p`
   font-weight: 200;
 `
 
+export const StyledSpan = styled.span`
+  margin: ${({margin}) => margin};
+  cursor: ${({cursor}) => cursor};
+`
+
 export const Header = ({ children, weight, color, margin, size }) => (
   <StyledHeader 
     weight={weight}

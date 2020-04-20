@@ -29,7 +29,6 @@ const ContentTable = ({ data, handleEdit, handleDelete, active, activeForm}) => 
         }
       </>
     )
-    else return ''
   }
 
 

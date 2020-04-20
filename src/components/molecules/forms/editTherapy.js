@@ -1,8 +1,8 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useReducer } from 'react'
 
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers';
-import { SubHeader, Paragraph } from '../../styledComponents/typography'
+import { SubHeader, Paragraph, StyledSpan } from '../../styledComponents/typography'
 import { StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms' 
 
 function paragraphsReducer(state, action) {
@@ -21,18 +21,15 @@ function paragraphsReducer(state, action) {
 }
 
 
-const EditTherapy = ({ therapy, closeForm }) => {
-  console.log(therapy);
+const EditTherapy = ({ therapy, closeForm, therapists }) => {
   
   const name = useFormInput(therapy.name)
   const heading = useFormInput(therapy.heading)
+  const price = useFormInput(therapy.price)
   const extraP = useFormInput('')
+  const [photo, setPhoto] = useState()
   const [paragraphs, dispatch] = useReducer(paragraphsReducer, therapy.paragraphs)
   const [showExtraP, setShowExtraP] = useState(false)
-
-  useEffect(() => {
-    
-  }, [therapy])
 
   const changeParagraph = ({text, index}) => {
     let obj= {
@@ -45,6 +42,20 @@ const EditTherapy = ({ therapy, closeForm }) => {
     })
   }
 
+  
+  const saveNewParagraph = () => {
+    dispatch({
+      type: 'add-paragraph',
+      payload: extraP.value
+    })
+    setShowExtraP(false)
+  }
+  
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0]
+    setPhoto(file)
+  }
+  
   const renderMoreParagraphsBtn = () => {
     if(!showExtraP) return (
       <button type="button" className="btn btn-success" onClick={() => setShowExtraP(true)}>+</button>
@@ -53,15 +64,6 @@ const EditTherapy = ({ therapy, closeForm }) => {
       <button type="button" className="btn btn-dark" onClick={saveNewParagraph}>Save</button>
     )
   }
-
-  const saveNewParagraph = () => {
-    dispatch({
-      type: 'add-paragraph',
-      payload: extraP.value
-    })
-    setShowExtraP(false)
-  }
-
 
   const renderParagraphs = () => 
     paragraphs.map((p, i) => (
@@ -123,10 +125,16 @@ const EditTherapy = ({ therapy, closeForm }) => {
           <button type="button" className="btn btn-light" onClick={e => closeForm('')}>close</button>
         </Container>
         <StyledForm width='100%'>
-          <StyledFormGroup direction='column'>
-            <StyledLabel>Name</StyledLabel>
-            <StyledTextInput width='300px' className="form-control" {...name}/>
-          </StyledFormGroup>
+          <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
+            <Container>
+              <StyledLabel>Name</StyledLabel>
+              <StyledTextInput width='300px' className="form-control" {...name}/>
+            </Container>
+            <Container>
+              <StyledLabel>Price</StyledLabel>
+              <StyledTextInput width='50px' type='number' className="form-control" {...price} />
+            </Container>
+          </Container>
           <StyledFormGroup direction='column'>
             <StyledLabel>Heading</StyledLabel>
             <StyledTextInput className="form-control" {...heading}/>
@@ -134,6 +142,20 @@ const EditTherapy = ({ therapy, closeForm }) => {
           {renderParagraphs()}
           {renderMoreParagraphsBtn()}
           {renderExtraP()}
+          <Container margin='10px 0'>
+            <Paragraph>
+              Current photo: <a href={therapy.photoUrl} target='_blank' rel="noopener noreferrer">open</a></Paragraph>
+            <div className="upload-btn-wrapper">
+              <button className="file-btn">New image</button>
+              <input type="file" name="myfile" onChange={e => handleFileUpload(e)}/>
+              <StyledSpan>{photo.name}</StyledSpan>
+            </div>
+            <Container>
+            {photo && 
+              <StyledSpan margin='0 10px' cursor='pointer' onClick={e => setPhoto('')}>Clear</StyledSpan>
+            }
+            </Container>
+          </Container>
         </StyledForm>
       </Container>
     )

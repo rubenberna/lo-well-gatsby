@@ -41,6 +41,7 @@ export const allDataQuery = graphql`
         paragraphs
         slug
         therapists
+        price
       }
     }
     events {
