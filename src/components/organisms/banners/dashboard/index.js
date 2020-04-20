@@ -45,6 +45,12 @@ const Dashboard = ({ data }) => {
   const handControlsSelection = (name) => {
     setActive(name)
     setShowForm('')
+    setEditableDoc('')
+  }
+
+  const closeForm = () => {
+    setShowForm('')
+    setEditableDoc('')
   }
 
   const renderForm = () => {
@@ -52,7 +58,7 @@ const Dashboard = ({ data }) => {
       case 'edit-events':
         return <EditEvent event={editableDoc}/>
       case 'edit-therapies':
-        return <EditTherapy therapy={editableDoc} closeForm={setShowForm} therapists={therapists}/>
+        return <EditTherapy therapy={editableDoc} closeForm={closeForm} therapists={therapists}/>
       default:
         break;
     }
@@ -66,6 +72,7 @@ const Dashboard = ({ data }) => {
         active={active}
         handleDelete={handleDelete} 
         activeForm={showForm}
+        editableDoc={editableDoc}
         handleEdit={handleEditSelection}/>
       {renderForm() }
     </Container>

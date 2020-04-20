@@ -6,6 +6,7 @@ export const STable = styled.table`
 export const StyledTr = styled.tr`
   transition: 0.3s all;
   height: 40px;
+  background: ${({background}) => background};
   &:hover {
     background: #e0e0e0;
   }

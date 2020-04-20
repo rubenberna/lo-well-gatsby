@@ -3,11 +3,11 @@ import React, { useState, useReducer } from 'react'
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers';
 import { SubHeader, Paragraph, StyledSpan } from '../../styledComponents/typography'
-import { StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms' 
+import { StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms'
 
 function paragraphsReducer(state, action) {
   switch (action.type) {
-    case 'add-paragraph':      
+    case 'add-paragraph':
       return [...state, action.payload]
     case 'remove-paragraph':
       let newState = [...state];
@@ -22,7 +22,7 @@ function paragraphsReducer(state, action) {
 
 
 const EditTherapy = ({ therapy, closeForm, therapists }) => {
-  
+
   const name = useFormInput(therapy.name)
   const heading = useFormInput(therapy.heading)
   const price = useFormInput(therapy.price)
@@ -31,18 +31,18 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
   const [paragraphs, dispatch] = useReducer(paragraphsReducer, therapy.paragraphs)
   const [showExtraP, setShowExtraP] = useState(false)
 
-  const changeParagraph = ({text, index}) => {
-    let obj= {
+  const changeParagraph = ({ text, index }) => {
+    let obj = {
       index,
       text
-    }    
+    }
     dispatch({
       type: 'change-paragraph',
       payload: obj
     })
   }
 
-  
+
   const saveNewParagraph = () => {
     dispatch({
       type: 'add-paragraph',
@@ -50,14 +50,14 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
     })
     setShowExtraP(false)
   }
-  
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
     setPhoto(file)
   }
-  
+
   const renderMoreParagraphsBtn = () => {
-    if(!showExtraP) return (
+    if (!showExtraP) return (
       <button type="button" className="btn btn-success" onClick={() => setShowExtraP(true)}>+</button>
     )
     else return (
@@ -65,19 +65,19 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
     )
   }
 
-  const renderParagraphs = () => 
+  const renderParagraphs = () =>
     paragraphs.map((p, i) => (
       <StyledFormGroup direction='column' key={i}>
         <StyledLabel>Paragraph {i + 1}</StyledLabel>
         <Container display='flex' align='baseline'>
-          <textarea 
-            className="form-control" 
-            rows="3" 
-            value={p} 
-            onChange={e => changeParagraph({ text: e.target.value, index: i })}/>
-          <button 
-            type="button" 
-            className="btn btn-danger" 
+          <textarea
+            className="form-control"
+            rows="3"
+            value={p}
+            onChange={e => changeParagraph({ text: e.target.value, index: i })} />
+          <button
+            type="button"
+            className="btn btn-danger"
             onClick={() => dispatch({
               type: 'remove-paragraph',
               payload: i
@@ -89,17 +89,17 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
     ))
 
   const renderExtraP = () => {
-    if(showExtraP) return (
+    if (showExtraP) return (
       <Container margin='10px 0'>
         <Paragraph>Extra paragraph</Paragraph>
         <Container display='flex' align='baseline'>
-          <textarea 
-            className="form-control" 
-            rows="3" 
-            {...extraP}/>
-          <button 
-            type="button" 
-            className="btn btn-danger" 
+          <textarea
+            className="form-control"
+            rows="3"
+            {...extraP} />
+          <button
+            type="button"
+            className="btn btn-danger"
             onClick={() => setShowExtraP(false)}>-</button>
         </Container>
       </Container>
@@ -109,7 +109,7 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
 
   const renderForm = () => {
     return (
-      <Container 
+      <Container
         display='flex'
         width='50%'
         justify='center'
@@ -119,16 +119,16 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
         padding='20px'
         border='2px dashed'
         radius='5px'
-        >
+      >
         <Container display='flex' justify='space-between'>
           <SubHeader>Edit form</SubHeader>
-          <button type="button" className="btn btn-light" onClick={e => closeForm('')}>close</button>
+          <button type="button" className="btn btn-light" onClick={closeForm}>exit</button>
         </Container>
         <StyledForm width='100%'>
           <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
             <Container>
               <StyledLabel>Name</StyledLabel>
-              <StyledTextInput width='300px' className="form-control" {...name}/>
+              <StyledTextInput width='300px' className="form-control" {...name} />
             </Container>
             <Container>
               <StyledLabel>Price</StyledLabel>
@@ -137,23 +137,22 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
           </Container>
           <StyledFormGroup direction='column'>
             <StyledLabel>Heading</StyledLabel>
-            <StyledTextInput className="form-control" {...heading}/>
+            <StyledTextInput className="form-control" {...heading} />
           </StyledFormGroup>
           {renderParagraphs()}
           {renderMoreParagraphsBtn()}
           {renderExtraP()}
           <Container margin='10px 0'>
             <Paragraph>
-              Current photo: <a href={therapy.photoUrl} target='_blank' rel="noopener noreferrer">open</a></Paragraph>
-            <div className="upload-btn-wrapper">
-              <button className="file-btn">New image</button>
-              <input type="file" name="myfile" onChange={e => handleFileUpload(e)}/>
-              <StyledSpan>{photo.name}</StyledSpan>
+              Current photo: <a href={therapy.photoUrl} target='_blank' rel="noopener noreferrer">click to see</a></Paragraph>
+            <div className="custom-file">
+              <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)}/>
+              <label className="custom-file-label" for="customFile">{!photo ? 'Choose file' : photo.name}</label>
             </div>
-            <Container>
-            {photo && 
-              <StyledSpan margin='0 10px' cursor='pointer' onClick={e => setPhoto('')}>Clear</StyledSpan>
-            }
+            <Container margin='10px 0'>
+              {photo &&
+                <button type="button" className="btn btn-light" onClick={e => setPhoto('')}>Clear upload</button>
+              }
             </Container>
           </Container>
         </StyledForm>

@@ -5,7 +5,7 @@ import { SubHeader } from '../../styledComponents/typography'
 import { danger, warning } from '../../styledComponents/variables'
 import { STable, StyledTr, MainTd, ActionTd} from './table.style'
 
-const ContentTable = ({ data, handleEdit, handleDelete, active, activeForm}) => {
+const ContentTable = ({ data, handleEdit, handleDelete, active, activeForm, editableDoc}) => {
 
   const renderActionButtons = (t) => {
     if(!activeForm) return (
@@ -34,7 +34,7 @@ const ContentTable = ({ data, handleEdit, handleDelete, active, activeForm}) => 
 
   const renderTable = () => (
     data.map(t => (
-      <StyledTr key={t.id}>
+      <StyledTr key={t.id} background={editableDoc.id === t.id ? '#e0e0e0' : ''}>
         <MainTd width='60%'>{t.name}</MainTd>
         {renderActionButtons(t)}
       </StyledTr>
