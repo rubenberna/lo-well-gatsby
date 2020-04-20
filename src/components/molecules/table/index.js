@@ -5,29 +5,39 @@ import { SubHeader } from '../../styledComponents/typography'
 import { danger, warning } from '../../styledComponents/variables'
 import { STable, StyledTr, MainTd, ActionTd} from './table.style'
 
-const ContentTable = ({ data, handleEdit, handleDelete, active }) => {
+const ContentTable = ({ data, handleEdit, handleDelete, active, activeForm}) => {
 
-  const renderTable = () => (
-    data.map(t => (
-      <StyledTr key={t.id}>
-        <MainTd width='60%'>{t.name}</MainTd>
-        <ActionTd 
+  const renderActionButtons = (t) => {
+    if(!activeForm) return (
+      <>
+        <ActionTd
           color={warning}
           onClick={() => handleEdit({
             formName: `edit-${active}`,
             doc: t
           })}
-          >
+        >
           Edit
         </ActionTd>
         {active !== 'about' &&
-        <ActionTd 
-          color={danger}
-          onClick={() => handleDelete(t)}
+          <ActionTd
+            color={danger}
+            onClick={() => handleDelete(t)}
           >
-          Delete
+            Delete
         </ActionTd>
         }
+      </>
+    )
+    else return ''
+  }
+
+
+  const renderTable = () => (
+    data.map(t => (
+      <StyledTr key={t.id}>
+        <MainTd width='60%'>{t.name}</MainTd>
+        {renderActionButtons(t)}
       </StyledTr>
     ))
   )

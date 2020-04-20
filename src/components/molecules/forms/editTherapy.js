@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useReducer, useEffect } from 'react'
 
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers';
@@ -21,13 +21,18 @@ function paragraphsReducer(state, action) {
 }
 
 
-const EditTherapy = ({ therapy }) => {
-  console.log('therapy Edit: ', therapy);
+const EditTherapy = ({ therapy, closeForm }) => {
+  console.log(therapy);
+  
   const name = useFormInput(therapy.name)
   const heading = useFormInput(therapy.heading)
   const extraP = useFormInput('')
   const [paragraphs, dispatch] = useReducer(paragraphsReducer, therapy.paragraphs)
   const [showExtraP, setShowExtraP] = useState(false)
+
+  useEffect(() => {
+    
+  }, [therapy])
 
   const changeParagraph = ({text, index}) => {
     let obj= {
@@ -113,7 +118,10 @@ const EditTherapy = ({ therapy }) => {
         border='2px dashed'
         radius='5px'
         >
-        <SubHeader>Edit form</SubHeader>
+        <Container display='flex' justify='space-between'>
+          <SubHeader>Edit form</SubHeader>
+          <button type="button" className="btn btn-light" onClick={e => closeForm('')}>close</button>
+        </Container>
         <StyledForm width='100%'>
           <StyledFormGroup direction='column'>
             <StyledLabel>Name</StyledLabel>

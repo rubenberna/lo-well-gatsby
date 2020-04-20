@@ -28,7 +28,7 @@ const Dashboard = ({ data }) => {
     if (active === 'about') setTableContent(therapists)
   }, [active, events, therapists, therapies])
   
-  const handleEdit = ({formName, doc}) => {
+  const handleEditSelection = async ({formName, doc}) => {    
     setShowForm(formName)
     setEditableDoc(doc)
   }
@@ -42,12 +42,17 @@ const Dashboard = ({ data }) => {
     })
   }
 
+  const handControlsSelection = (name) => {
+    setActive(name)
+    setShowForm('')
+  }
+
   const renderForm = () => {
     switch (showForm) {
       case 'edit-events':
         return <EditEvent event={editableDoc}/>
       case 'edit-therapies':
-        return <EditTherapy therapy={editableDoc}/>
+        return <EditTherapy therapy={editableDoc} closeForm={setShowForm}/>
       default:
         break;
     }
@@ -55,12 +60,13 @@ const Dashboard = ({ data }) => {
   
   return (
     <Container display='flex'>
-      <ControlsDashboard active={active} setActive={setActive}/>
+      <ControlsDashboard active={active} setActive={handControlsSelection}/>
       <ContentTable 
         data={tableContent}
         active={active}
         handleDelete={handleDelete} 
-        handleEdit={handleEdit}/>
+        activeForm={showForm}
+        handleEdit={handleEditSelection}/>
       {renderForm() }
     </Container>
   )
