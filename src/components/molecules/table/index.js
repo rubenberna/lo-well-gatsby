@@ -5,10 +5,10 @@ import { SubHeader } from '../../styledComponents/typography'
 import { danger, warning } from '../../styledComponents/variables'
 import { STable, StyledTr, MainTd, ActionTd} from './table.style'
 
-const ContentTable = ({ data, handleEdit, handleDelete, active, activeForm, editableDoc}) => {
+const ContentTable = ({ data, handleEdit, handleDelete, active, formIsVisible, editableDoc}) => {
 
   const renderActionButtons = (t) => {
-    if(!activeForm) return (
+    if (!formIsVisible) return (
       <>
         <ActionTd
           color={warning}
@@ -34,7 +34,7 @@ const ContentTable = ({ data, handleEdit, handleDelete, active, activeForm, edit
 
   const renderTable = () => (
     data.map(t => (
-      <StyledTr key={t.id} background={editableDoc.id === t.id ? '#e0e0e0' : ''}>
+      <StyledTr key={t.id} background={editableDoc.id === t.id ? '#e0e0e0' : ''} hover={formIsVisible ? false : true}>
         <MainTd width='60%'>{t.name}</MainTd>
         {renderActionButtons(t)}
       </StyledTr>
@@ -48,6 +48,7 @@ const ContentTable = ({ data, handleEdit, handleDelete, active, activeForm, edit
         border='solid'
         padding='14px'
         radius='8px'
+        disabled={formIsVisible ? true : false}
         width='70%'>
         <STable>
           <tbody>

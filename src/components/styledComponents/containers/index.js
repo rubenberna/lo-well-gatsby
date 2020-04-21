@@ -23,9 +23,10 @@ const StyledContainer = styled.div`
   border-radius: ${({radius}) => radius};
   max-width: ${({ maxWidth }) => maxWidth};
   min-height: ${({ minHeight }) => minHeight};
+  opacity: ${({ disabled }) => disabled ? '0.7' : '1'};
 `
 
-export const Container = ({ children, width, direction, display, justify, height, align, alignSelf, margin, background, position, zIndex, top, left, right, bottom, padding, border, shadow, radius, maxWidth, minHeight }) => {
+export const Container = ({ children, width, direction, display, justify, height, align, alignSelf, margin, background, position, zIndex, top, left, right, bottom, padding, border, shadow, radius, maxWidth, minHeight, disabled }) => {
   
   return (
     <StyledContainer
@@ -50,6 +51,7 @@ export const Container = ({ children, width, direction, display, justify, height
       maxWidth={maxWidth}
       alignSelf={alignSelf}
       minHeight={minHeight}
+      disabled={disabled}
       >
       {children}
     </StyledContainer>

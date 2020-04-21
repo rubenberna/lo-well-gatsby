@@ -43,6 +43,8 @@ export const FooterDetails = styled.p`
 export const StyledSpan = styled.span`
   margin: ${({margin}) => margin};
   cursor: ${({cursor}) => cursor};
+  color: ${({ color }) => color};
+  background: ${({background}) => background};
 `
 
 export const Header = ({ children, weight, color, margin, size }) => (

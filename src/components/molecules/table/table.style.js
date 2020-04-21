@@ -8,7 +8,7 @@ export const StyledTr = styled.tr`
   height: 40px;
   background: ${({background}) => background};
   &:hover {
-    background: #e0e0e0;
+    background: ${({hover}) => hover ? '#e0e0e0' : ''};
   }
 `
 

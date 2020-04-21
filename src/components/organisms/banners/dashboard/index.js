@@ -28,7 +28,9 @@ const Dashboard = ({ data }) => {
     if (active === 'about') setTableContent(therapists)
   }, [active, events, therapists, therapies])
   
-  const handleEditSelection = async ({formName, doc}) => {    
+  const handleEditSelection = async ({formName, doc}) => {  
+    setShowForm('')
+    setEditableDoc('')  
     setShowForm(formName)
     setEditableDoc(doc)
   }
@@ -71,7 +73,7 @@ const Dashboard = ({ data }) => {
         data={tableContent}
         active={active}
         handleDelete={handleDelete} 
-        activeForm={showForm}
+        formIsVisible={showForm}
         editableDoc={editableDoc}
         handleEdit={handleEditSelection}/>
       {renderForm() }

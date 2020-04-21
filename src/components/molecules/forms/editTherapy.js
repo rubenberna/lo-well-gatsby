@@ -1,8 +1,11 @@
 import React, { useState, useReducer } from 'react'
+import Select from 'react-select';
 
+import { actionsHub } from '../../../services/hub'
+import { UPDATE_THERAPY } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers';
-import { SubHeader, Paragraph, StyledSpan } from '../../styledComponents/typography'
+import { SubHeader, Paragraph } from '../../styledComponents/typography'
 import { StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms'
 
 function paragraphsReducer(state, action) {
@@ -27,6 +30,7 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
   const heading = useFormInput(therapy.heading)
   const price = useFormInput(therapy.price)
   const extraP = useFormInput('')
+  const [selectedTherapists, setSelectedTherapists] = useState(therapy.therapists.map(t => ({ value: t, label: t })))
   const [photo, setPhoto] = useState()
   const [paragraphs, dispatch] = useReducer(paragraphsReducer, therapy.paragraphs)
   const [showExtraP, setShowExtraP] = useState(false)
@@ -107,6 +111,28 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
     else return ''
   }
 
+  const optionsList = therapists.map(t => ({ value: t.name, label: t.name }))
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const updatedTherapy = {
+      name: name.value,
+      heading: heading.value,
+      price: price.value,
+      paragraphs,
+      slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
+      photo,
+      therapists: selectedTherapists.map(t => t.value),
+      id: therapy.id,
+      photoUrl: therapy.photoUrl
+    }
+
+    actionsHub({
+      type: UPDATE_THERAPY,
+      payload: updatedTherapy
+    })
+  }
+
   const renderForm = () => {
     return (
       <Container
@@ -124,7 +150,7 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
           <SubHeader>Edit form</SubHeader>
           <button type="button" className="btn btn-light" onClick={closeForm}>exit</button>
         </Container>
-        <StyledForm width='100%'>
+        <StyledForm width='100%' onSubmit={handleSubmit}>
           <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
             <Container>
               <StyledLabel>Name</StyledLabel>
@@ -147,7 +173,7 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
               Current photo: <a href={therapy.photoUrl} target='_blank' rel="noopener noreferrer">click to see</a></Paragraph>
             <div className="custom-file">
               <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)}/>
-              <label className="custom-file-label" for="customFile">{!photo ? 'Choose file' : photo.name}</label>
+              <label className="custom-file-label" htmlFor="customFile">{!photo ? 'New photo?' : photo.name}</label>
             </div>
             <Container margin='10px 0'>
               {photo &&
@@ -155,6 +181,16 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
               }
             </Container>
           </Container>
+          <Container margin='10px 0'>
+          <Paragraph>Therapists list:</Paragraph>
+            <Select
+              isMulti
+              value={selectedTherapists}
+              onChange={e => setSelectedTherapists(e)}
+              options={optionsList}
+            />
+          </Container>
+          <button type="submit" className="btn btn-primary">Save</button>
         </StyledForm>
       </Container>
     )
@@ -164,3 +200,4 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
 
 }
 export default EditTherapy
+
