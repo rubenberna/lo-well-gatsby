@@ -38,6 +38,8 @@ const Dashboard = ({ data, addTimer }) => {
       payload: obj
     })
     addTimer(60)
+    setShowForm('')
+    setEditableDoc('') 
   }
 
   const handleControlsSelection = (name) => {

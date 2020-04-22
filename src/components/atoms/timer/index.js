@@ -12,7 +12,7 @@ const Timer = ({counter}) => {
 
   const renderRefreshIcon = () => {
     if(timer < 1) {
-      return <RefreshIcon />
+      return <RefreshIcon onClick={() => window.location.reload(false)}/>
     }
   }
   return (
