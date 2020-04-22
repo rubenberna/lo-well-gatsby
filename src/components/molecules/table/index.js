@@ -2,41 +2,21 @@ import React from 'react'
 
 import { Container } from '../../styledComponents/containers'
 import { SubHeader } from '../../styledComponents/typography'
-import { danger, warning } from '../../styledComponents/variables'
-import { STable, StyledTr, MainTd, ActionTd} from './table.style'
+import { STable, StyledTr, MainTd} from './table.style'
 
-const ContentTable = ({ data, handleEdit, handleDelete, active, formIsVisible, editableDoc}) => {
+const ContentTable = ({ data, handleEdit, active, formIsVisible, editableDoc}) => {
 
-  const renderActionButtons = (t) => {
-    if (!formIsVisible) return (
-      <>
-        <ActionTd
-          color={warning}
+  const renderTable = () => (
+    data.map(t => (
+      <StyledTr key={t.id} background={editableDoc.id === t.id ? '#e0e0e0' : ''} hover={formIsVisible ? false : true} cursor={formIsVisible ? 'not-allowed' : 'pointer'}>
+        <MainTd 
+          width='20%'
           onClick={() => handleEdit({
             formName: `edit-${active}`,
             doc: t
           })}
-        >
-          Edit
-        </ActionTd>
-        {active !== 'about' &&
-          <ActionTd
-            color={danger}
-            onClick={() => handleDelete(t)}
-          >
-            Delete
-        </ActionTd>
-        }
-      </>
-    )
-  }
-
-
-  const renderTable = () => (
-    data.map(t => (
-      <StyledTr key={t.id} background={editableDoc.id === t.id ? '#e0e0e0' : ''} hover={formIsVisible ? false : true}>
-        <MainTd width='60%'>{t.name}</MainTd>
-        {renderActionButtons(t)}
+          >{t.name}
+        </MainTd>
       </StyledTr>
     ))
   )

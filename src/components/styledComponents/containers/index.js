@@ -24,9 +24,10 @@ const StyledContainer = styled.div`
   max-width: ${({ maxWidth }) => maxWidth};
   min-height: ${({ minHeight }) => minHeight};
   opacity: ${({ disabled }) => disabled ? '0.7' : '1'};
+  overflow: ${({ overflow }) => overflow};
 `
 
-export const Container = ({ children, width, direction, display, justify, height, align, alignSelf, margin, background, position, zIndex, top, left, right, bottom, padding, border, shadow, radius, maxWidth, minHeight, disabled }) => {
+export const Container = ({ children, width, direction, display, justify, height, align, alignSelf, margin, background, position, zIndex, top, left, right, bottom, padding, border, shadow, radius, maxWidth, minHeight, disabled, overflow }) => {
   
   return (
     <StyledContainer
@@ -52,6 +53,7 @@ export const Container = ({ children, width, direction, display, justify, height
       alignSelf={alignSelf}
       minHeight={minHeight}
       disabled={disabled}
+      overflow={overflow}
       >
       {children}
     </StyledContainer>

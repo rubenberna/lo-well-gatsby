@@ -7,6 +7,7 @@ export const StyledTr = styled.tr`
   transition: 0.3s all;
   height: 40px;
   background: ${({background}) => background};
+  cursor: ${({ cursor }) => cursor};
   &:hover {
     background: ${({hover}) => hover ? '#e0e0e0' : ''};
   }

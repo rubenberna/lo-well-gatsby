@@ -24,7 +24,7 @@ function paragraphsReducer(state, action) {
 }
 
 
-const EditTherapy = ({ therapy, closeForm, therapists }) => {
+const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
 
   const name = useFormInput(therapy.name)
   const heading = useFormInput(therapy.heading)
@@ -127,9 +127,9 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
       photoUrl: therapy.photoUrl
     }
 
-    actionsHub({
+    handleEdit({
       type: UPDATE_THERAPY,
-      payload: updatedTherapy
+      obj: updatedTherapy
     })
   }
 
@@ -137,18 +137,17 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
     return (
       <Container
         display='flex'
-        width='50%'
         justify='center'
         direction='column'
         alignSelf='flex-start'
-        margin='60px 0'
+        margin='60px 0 20px 0'
         padding='20px'
         border='2px dashed'
         radius='5px'
       >
         <Container display='flex' justify='space-between'>
           <SubHeader>Edit form</SubHeader>
-          <button type="button" className="btn btn-light" onClick={closeForm}>exit</button>
+          <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
         </Container>
         <StyledForm width='100%' onSubmit={handleSubmit}>
           <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
@@ -182,7 +181,7 @@ const EditTherapy = ({ therapy, closeForm, therapists }) => {
             </Container>
           </Container>
           <Container margin='10px 0'>
-          <Paragraph>Therapists list:</Paragraph>
+          <Paragraph>Current therapists:</Paragraph>
             <Select
               isMulti
               value={selectedTherapists}

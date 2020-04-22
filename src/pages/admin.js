@@ -9,21 +9,26 @@ import Dashboard from '../components/organisms/banners/dashboard'
 import StatusBoard from '../components/molecules/statusBoard'
 
 const Admin = ({ data }) => {
-  const [user, setUser] = useState('')  
+  const [user, setUser] = useState('')
+  const [timings, setTimings] = useState([])  
 
   useEffect(() => {
     firebaseApp.auth().onAuthStateChanged(setUser);
   }, []);
 
+  const addTimer = (obj) => {
+    setTimings([...timings, obj])
+  }
+
   const conditionalRender = () => {
     if (!user) return <Login setUser={setUser}/>
-    else return <Dashboard data={data}/>
+    else return <Dashboard data={data} addTimer={addTimer}/>
   }
 
   return (
     <Layout>
       <Container position='relative'>
-        <StatusBoard user={user}/>
+        <StatusBoard user={user} timings={timings}/>
         {conditionalRender()}
       </Container>
     </Layout>

@@ -47,6 +47,14 @@ export const StyledSpan = styled.span`
   background: ${({background}) => background};
 `
 
+export const NoteCounter = styled.span`
+  font-size: 12px;
+  background: green;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+`
+
 export const Header = ({ children, weight, color, margin, size }) => (
   <StyledHeader 
     weight={weight}
