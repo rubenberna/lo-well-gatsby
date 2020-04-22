@@ -24,7 +24,7 @@ const Delete = ({ obj, active, handleDelete }) => {
 
   return (
     <>
-      <div class="alert alert-danger" role="alert" onClick={() => setShow(!show) }>
+      <div className="alert alert-danger" role="alert" onClick={() => setShow(!show) }>
         Delete {obj.name} ?
       </div>
       <DeleteModal show={show} obj={obj} setShow={setShow} deleteObj={deleteObj}/>

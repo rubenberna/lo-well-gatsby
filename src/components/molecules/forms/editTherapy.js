@@ -1,7 +1,6 @@
 import React, { useState, useReducer } from 'react'
 import Select from 'react-select';
 
-import { actionsHub } from '../../../services/hub'
 import { UPDATE_THERAPY } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers';
@@ -140,7 +139,7 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
         justify='center'
         direction='column'
         alignSelf='flex-start'
-        margin='60px 0 20px 0'
+        margin='60px 10px 20px 0'
         padding='20px'
         border='2px dashed'
         radius='5px'
