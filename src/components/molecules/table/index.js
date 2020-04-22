@@ -4,14 +4,18 @@ import { Container } from '../../styledComponents/containers'
 import { SubHeader } from '../../styledComponents/typography'
 import { STable, StyledTr, MainTd} from './table.style'
 
-const ContentTable = ({ data, handleEdit, active, formIsVisible, editableDoc}) => {
+const ContentTable = ({ data, handleEditSelection, active, formIsVisible, editableDoc}) => {
 
   const renderTable = () => (
     data.map(t => (
-      <StyledTr key={t.id} background={editableDoc.id === t.id ? '#e0e0e0' : ''} hover={formIsVisible ? false : true} cursor={formIsVisible ? 'not-allowed' : 'pointer'}>
+      <StyledTr 
+        key={t.id} 
+        background={editableDoc.id === t.id ? '#e0e0e0' : ''} 
+        cursor='pointer'
+        >
         <MainTd 
           width='20%'
-          onClick={() => handleEdit({
+          onClick={() => handleEditSelection({
             formName: `edit-${active}`,
             doc: t
           })}
@@ -28,7 +32,6 @@ const ContentTable = ({ data, handleEdit, active, formIsVisible, editableDoc}) =
         border='solid'
         padding='14px'
         radius='8px'
-        disabled={formIsVisible ? true : false}
         width='70%'>
         <STable>
           <tbody>

@@ -18,3 +18,14 @@ export const StyledTextInput = styled.input`
 export const StyledLabel = styled.label`
 
 `
+
+export const FormWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-self: flex-start;
+  margin: 60px 10px 20px 0;
+  padding: 20px;
+  border: 2px dashed;
+  border-radius: 5px;
+`

@@ -35,7 +35,7 @@ const StatusBoard = ({ user, timings }) => {
         background='#fff9c4'
         radius='6px'
         overflow='hidden'
-        height={expanded ? 'auto' : '45px'}
+        height={expanded ? 'auto' : '50px'}
         >
         <Container display='flex' justify='space-between'>
           <Container>
@@ -51,7 +51,9 @@ const StatusBoard = ({ user, timings }) => {
             Logout
             </StyledSpan>
         </Container>
-        {renderTimers()}
+        <Container margin='10px 0'>
+          {renderTimers()}
+        </Container>
       </Container>
     ) 
     else return ''

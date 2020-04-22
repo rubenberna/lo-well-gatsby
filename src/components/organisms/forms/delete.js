@@ -5,7 +5,7 @@ import {
   DELETE_THERAPY,
   DELETE_THERAPIST
 } from '../../../services/types'
-import DeleteModal from '../modal/delete'
+import DeleteModal from '../../molecules/modal/delete'
 
 const Delete = ({ obj, active, handleDelete }) => {
   const [show, setShow] = useState(false)

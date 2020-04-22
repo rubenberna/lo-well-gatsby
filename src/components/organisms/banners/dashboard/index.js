@@ -4,9 +4,9 @@ import { actionsHub } from '../../../../services/hub'
 import { Container } from '../../../styledComponents/containers'
 import ControlsDashboard from '../../../molecules/controls/dashboard'
 import ContentTable from '../../../molecules/table'
-import EditEvent from '../../../molecules/forms/editEvent'
-import EditTherapy from '../../../molecules/forms/editTherapy'
-import DeleteForm from '../../../molecules/forms/delete'
+import EditEvent from '../../forms/editEvent'
+import EditTherapy from '../../forms/editTherapy'
+import DeleteForm from '../../forms/delete'
 
 const Dashboard = ({ data, addTimer }) => {
   const { events } = data.events
@@ -17,7 +17,6 @@ const Dashboard = ({ data, addTimer }) => {
   const [tableContent, setTableContent] = useState(events)
   const [showForm, setShowForm] = useState('')
   const [editableDoc, setEditableDoc] = useState('')
-
   
   useEffect(() => {
     if (active === 'events') setTableContent(events)
@@ -37,7 +36,7 @@ const Dashboard = ({ data, addTimer }) => {
       type,
       payload: obj
     })
-    addTimer(60)
+    addTimer(75)
     setShowForm('')
     setEditableDoc('') 
   }
@@ -58,6 +57,7 @@ const Dashboard = ({ data, addTimer }) => {
       case 'edit-events':
         return <EditEvent 
           event={editableDoc} 
+          closeForm={closeForm}
           handleEdit={handleDBQuery}/>
       case 'edit-therapies':
         return <EditTherapy 
@@ -82,7 +82,7 @@ const Dashboard = ({ data, addTimer }) => {
         active={active}
         formIsVisible={showForm}
         editableDoc={editableDoc}
-        handleEdit={handleEditSelection}/>
+        handleEditSelection={handleEditSelection}/>
         <Container width='67%'>
         { renderForm() }
         { renderDelete() }

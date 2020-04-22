@@ -5,7 +5,7 @@ import { UPDATE_THERAPY } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers';
 import { SubHeader, Paragraph } from '../../styledComponents/typography'
-import { StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms'
+import { FormWrapper, StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms'
 
 function paragraphsReducer(state, action) {
   switch (action.type) {
@@ -134,16 +134,7 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
 
   const renderForm = () => {
     return (
-      <Container
-        display='flex'
-        justify='center'
-        direction='column'
-        alignSelf='flex-start'
-        margin='60px 10px 20px 0'
-        padding='20px'
-        border='2px dashed'
-        radius='5px'
-      >
+      <FormWrapper>
         <Container display='flex' justify='space-between'>
           <SubHeader>Edit form</SubHeader>
           <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
@@ -175,7 +166,7 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
             </div>
             <Container margin='10px 0'>
               {photo &&
-                <button type="button" className="btn btn-light" onClick={e => setPhoto('')}>Clear upload</button>
+                <button type="button" className="btn btn-light" onClick={e => setPhoto('')}>Clear uploaded photo</button>
               }
             </Container>
           </Container>
@@ -190,7 +181,7 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
           </Container>
           <button type="submit" className="btn btn-primary">Save</button>
         </StyledForm>
-      </Container>
+      </FormWrapper>
     )
   }
 
