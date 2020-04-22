@@ -9,10 +9,10 @@ const EventDetails = ({ event }) => {
       <>
         <p>Price: €{event.price}</p>
         {event.regularVenue.map((v, i) => (
-          <>
-            <Dates dates={v.weekdays} key={shortid.generate()}/>
+          <div key={shortid.generate()}>
+            <Dates dates={v.weekdays} />
             <p key={shortid.generate()}>{v.location}</p>
-          </>
+          </div>
           )
         )}
       </>

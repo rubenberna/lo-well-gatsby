@@ -60,7 +60,8 @@ export const allDataQuery = graphql`
         price
         regular
         regularVenue {
-          location
+          location,
+          weekdays
         }
       }
     }

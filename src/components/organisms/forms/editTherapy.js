@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useReducer, useEffect } from 'react'
 import Select from 'react-select';
 
 import { UPDATE_THERAPY } from '../../../services/types'
@@ -17,6 +17,8 @@ function paragraphsReducer(state, action) {
       return newState
     case 'change-paragraph':
       return state.map((el, i) => i === action.payload.index ? action.payload.text : el)
+    case 'set-paragraphs':
+      return action.payload
     default:
       return state;
   }
@@ -33,6 +35,16 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
   const [photo, setPhoto] = useState()
   const [paragraphs, dispatch] = useReducer(paragraphsReducer, therapy.paragraphs)
   const [showExtraP, setShowExtraP] = useState(false)
+
+  // Change form values when therapy object changes
+  useEffect(() => {
+    setPhoto('')
+    setSelectedTherapists(therapy.therapists.map(t => ({ value: t, label: t })))
+    dispatch({
+      type: 'set-paragraphs',
+      payload: therapy.paragraphs
+    })
+  }, therapy)
 
   const changeParagraph = ({ text, index }) => {
     let obj = {

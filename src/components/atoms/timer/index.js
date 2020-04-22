@@ -8,6 +8,9 @@ const Timer = ({counter}) => {
 
   useEffect(() => {
     timer > 0 && setTimeout(() => setTimer(timer - 1), 1000)
+    return () => {
+      clearTimeout(timer)
+    }
   }, [timer])
 
   const renderRefreshIcon = () => {

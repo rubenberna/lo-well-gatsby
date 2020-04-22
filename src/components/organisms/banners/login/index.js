@@ -13,17 +13,21 @@ const Login = () => {
 
   const handleLogin = useCallback(
     async () => {
+      console.log(email.value, password.value);
       try {
         await firebaseApp
           .auth()
           .signInWithEmailAndPassword(email.value.toLowerCase(), password.value)
+
       } catch (e) {
+        console.log(e);
+        
         alert(e)
       }
     }, [email.value, password.value]
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => {    
     e.preventDefault();
     if (!email.value || !password.value) {
       setShowAlert(true)

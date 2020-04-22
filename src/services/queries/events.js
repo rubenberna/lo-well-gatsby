@@ -10,7 +10,7 @@ export const createEvent = async (event) => {
 export const updateEvent = async (event) => {
   if (event.photo) {
     event.photoUrl = await uploadPhoto(event.photo)
-  }
+  }  
   const eventRef = events.doc(event.id)
   eventRef.update({
     date: event.date,
