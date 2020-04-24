@@ -6,9 +6,8 @@ import ControlsDashboard from '../../../molecules/controls/dashboard'
 import ContentTable from '../../../molecules/table'
 import EventForm from '../../forms/eventForm'
 import EditTherapy from '../../forms/editTherapy'
-import EditTherapist from '../../forms/editTherapist'
+import TherapistForm from '../../forms/therapistForm'
 import CreateTherapy from '../../forms/createTherapy'
-import CreateTherapist from '../../forms/createTherapist'
 import DeleteForm from '../../forms/delete'
 
 const Dashboard = ({ data, addTimer }) => {
@@ -71,7 +70,7 @@ const Dashboard = ({ data, addTimer }) => {
           therapists={therapists} 
           handleEdit={handleDBQuery}/>
       case 'edit-about':
-        return <EditTherapist 
+        return <TherapistForm 
           therapist={editableDoc} 
           typeOfAction={showForm}
           closeForm={closeForm} 
@@ -79,7 +78,6 @@ const Dashboard = ({ data, addTimer }) => {
       case 'create-events':
         return <EventForm 
           typeOfAction={showForm}
-          event={editableDoc}
           closeForm={closeForm} 
           handleEdit={handleDBQuery}/>
       case 'create-therapies':
@@ -88,8 +86,8 @@ const Dashboard = ({ data, addTimer }) => {
           typeOfAction={showForm}
           therapists={therapists}
           handleEdit={handleDBQuery} />
-      case 'create-therapist':
-        return <CreateTherapist
+      case 'create-about':
+        return <TherapistForm
           closeForm={closeForm}
           typeOfAction={showForm}
           handleEdit={handleDBQuery} />

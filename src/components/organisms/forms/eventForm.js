@@ -184,9 +184,9 @@ const EventForm = ({ event, closeForm, handleEdit, typeOfAction }) => {
     else {
       if(regularVenue) {        
         return regularVenue.map((venue, i) => (
-          <>
+          <div key={i}>
             {venue.location && 
-            <StyledFormGroup justify='space-between' key={i} align='flex-end'>
+            <StyledFormGroup justify='space-between' align='flex-end'>
               <Container>
                 <StyledLabel>Location</StyledLabel>
                 <StyledTextInput 
@@ -216,7 +216,7 @@ const EventForm = ({ event, closeForm, handleEdit, typeOfAction }) => {
             </button>
             </StyledFormGroup>
             }
-          </>
+          </div>
         ))
       } 
     }

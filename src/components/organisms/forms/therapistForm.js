@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
 
-import { UPDATE_THERAPIST } from '../../../services/types'
+import { UPDATE_THERAPIST, CREATE_THERAPIST } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers'
 import { SubHeader, Paragraph } from '../../styledComponents/typography'
 import { FormWrapper, StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms'
 
-const EditTherapist = ({ therapist, closeForm, handleEdit }) => {
-  const name = useFormInput(therapist.name)
-  const email = useFormInput(therapist.email)
-  const phone = useFormInput(therapist.phone)
-  const intro = useFormInput(therapist.intro)
+const TherapistForm = ({ therapist, closeForm, handleEdit, typeOfAction }) => {
+  const name = useFormInput(therapist?.name || '')
+  const email = useFormInput(therapist?.email || '')
+  const phone = useFormInput(therapist?.phone || '')
+  const intro = useFormInput(therapist?.intro || '')
   const [photo, setPhoto] = useState()
 
   useEffect(() => {
@@ -19,19 +19,19 @@ const EditTherapist = ({ therapist, closeForm, handleEdit }) => {
 
   const handleSubmit = e => {
     e.preventDefault()
-
+    const type = typeOfAction === 'edit-about' ? UPDATE_THERAPIST : CREATE_THERAPIST
     const updatedTherapist = {
       email: email.value,
       intro: intro.value,
       name: name.value,
       phone: phone.value,
       photo,
-      photoUrl: therapist.photoUrl,
-      id: therapist.id
+      photoUrl: therapist?.photoUrl || '',
+      id: therapist?.id || ''
     }    
 
     handleEdit({
-      type: UPDATE_THERAPIST,
+      type,
       obj: updatedTherapist
     })
   }
@@ -67,8 +67,13 @@ const EditTherapist = ({ therapist, closeForm, handleEdit }) => {
           />
         </StyledFormGroup>
         <StyledFormGroup margin='10px 0' direction='column'>
-          <Paragraph>
-            Current photo: <a href={therapist.photoUrl} target='_blank' rel="noopener noreferrer">click to see</a></Paragraph>
+          {  therapist && 
+            <Paragraph>
+              Current photo: <a href={therapist.photoUrl} target='_blank' rel="noopener noreferrer">
+              click to see
+              </a>
+            </Paragraph>
+          }
           <div className="custom-file">
             <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)} />
             <label className="custom-file-label" htmlFor="customFile">{!photo ? 'New photo?' : photo.name}</label>
@@ -95,4 +100,4 @@ const EditTherapist = ({ therapist, closeForm, handleEdit }) => {
   return renderForm()
 }
 
-export default EditTherapist
+export default TherapistForm
