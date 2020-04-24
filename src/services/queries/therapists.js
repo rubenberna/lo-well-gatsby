@@ -23,3 +23,8 @@ export const updateTherapist = async (therapist) => {
     photoUrl: therapist.photoUrl,
   })
 }
+
+export const deleteTherapist = async (therapist) => {
+  therapists.doc(therapist.id).delete()
+  return 'Deleted'
+}

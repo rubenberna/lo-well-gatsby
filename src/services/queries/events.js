@@ -26,9 +26,7 @@ export const updateEvent = async (event) => {
   })
 }
 
-export const deleteEvent = async (event) => {
-  console.log('query:', event);
-  
+export const deleteEvent = async (event) => {  
   events.doc(event.id).delete()
   return 'Deleted'
 }

@@ -13,7 +13,7 @@ export const useFormInput = (initialValue) => {
 
   return {
     value,
-    onChange: handleChange
+    onChange: handleChange,
   }
 }
 

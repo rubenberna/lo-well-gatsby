@@ -72,6 +72,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
   }
 
   const renderMoreParagraphsBtn = () => {
+    if(!paragraphs.length) return ''
     if (!showExtraP) return (
       <button type="button" className="btn btn-success" onClick={() => setShowExtraP(true)}>+</button>
     )
@@ -80,7 +81,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
     )
   }
 
-  const renderParagraphs = () =>
+  const renderExistingParagraphs = () => (
     paragraphs.map((p, i) => (
       <StyledFormGroup direction='column' key={i}>
         <StyledLabel>Paragraph {i + 1}</StyledLabel>
@@ -102,6 +103,29 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
         </Container>
       </StyledFormGroup>
     ))
+  )
+
+  const renderFirstParagraph = () => {
+    if(!paragraphs.length) return (
+      <>
+        <Container margin='10px 0'>
+          <Paragraph>First Paragraph</Paragraph>
+          <Container display='flex' align='baseline' margin='0 0 10px 0'>
+            <textarea
+              className="form-control"
+              rows="3"
+              {...extraP} />
+          </Container>
+          <button 
+            type="button" 
+            className="btn btn-dark" 
+            onClick={saveNewParagraph}>
+            Save
+          </button>
+        </Container>
+      </>
+    )
+  }
 
   const renderExtraP = () => {
     if (showExtraP) return (
@@ -170,7 +194,8 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
             <StyledLabel>Heading</StyledLabel>
             <StyledTextInput className="form-control" {...heading} />
           </StyledFormGroup>
-          {renderParagraphs()}
+          {renderExistingParagraphs()}
+          {renderFirstParagraph()}
           {renderMoreParagraphsBtn()}
           {renderExtraP()}
           <Container margin='10px 0'>

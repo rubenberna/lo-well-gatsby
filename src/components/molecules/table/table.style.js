@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const STable = styled.table`
   width: ${({width}) => width};
+  margin-bottom: 10px;
 `
 export const StyledTr = styled.tr`
   transition: 0.3s all;
@@ -14,7 +15,7 @@ export const StyledTr = styled.tr`
 `
 
 export const MainTd = styled.td`
-  width: ${({ width }) => width};
+  width: ${({ width }) => width}
 `
 
 export const ActionTd = styled.td`

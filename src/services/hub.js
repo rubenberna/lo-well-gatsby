@@ -11,7 +11,8 @@ import {
 } from './queries/therapies'
 import {
   createTherapist,
-  updateTherapist
+  updateTherapist,
+  deleteTherapist
 } from './queries/therapists'
 
 import {
@@ -22,7 +23,8 @@ import {
   UPDATE_THERAPY,
   DELETE_THERAPY,
   CREATE_THERAPIST,
-  UPDATE_THERAPIST
+  UPDATE_THERAPIST,
+  DELETE_THERAPIST
 } from './types'
 
 
@@ -53,6 +55,9 @@ export const actionsHub = ({type, payload}) => {
       return rebuildData()
     case UPDATE_THERAPIST:
       updateTherapist(payload)
+      return rebuildData()
+    case DELETE_THERAPIST:
+      deleteTherapist(payload)
       return rebuildData()
     default:
       break;
