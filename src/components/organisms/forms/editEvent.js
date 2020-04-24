@@ -85,7 +85,6 @@ const EditEvent = ({ event, closeForm, handleEdit }) => {
       type: UPDATE_EVENT,
       obj: updatedEvent
     })
-
   }
 
   const changeVenueLocation = ({ location, index}) => {

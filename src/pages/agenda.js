@@ -11,9 +11,13 @@ import SEO from "../components/seo"
 const Agenda = ({ data }) => {
 
   const { events } = data.events
-  // Only future or regular events
-  const filteredEvents = events.filter( ev => (moment(ev.date).format() >= moment().format()) || (ev.regular))
-  const eventsList = filteredEvents.map((ev, i) => <AgendaBanner key={ev.id} event={ev} number={i} last={filteredEvents.length}/>)
+  const irregularEvents = events.filter( ev => (moment(ev.date).format() >= moment().format()) && !ev.regular)
+  const regularEvents = events.filter(ev => ev.regular)
+
+  const ascEvents = irregularEvents.sort((a,b) => (a.date > b.date) ? 1 : -1)
+  const finalList = [...regularEvents, ...ascEvents]
+
+  const eventsList = finalList.map((ev, i) => <AgendaBanner key={ev.id} event={ev} number={i} last={finalList.length}/>)
   
   return (
     <Layout>

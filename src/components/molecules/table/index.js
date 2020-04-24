@@ -4,7 +4,7 @@ import { Container } from '../../styledComponents/containers'
 import { SubHeader } from '../../styledComponents/typography'
 import { STable, StyledTr, MainTd} from './table.style'
 
-const ContentTable = ({ data, handleEditSelection, active, formIsVisible, editableDoc}) => {
+const ContentTable = ({ data, handleEditSelection, active, editableDoc}) => {
 
   const renderTable = () => (
     data.map(t => (

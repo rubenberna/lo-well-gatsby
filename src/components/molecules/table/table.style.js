@@ -9,7 +9,7 @@ export const StyledTr = styled.tr`
   background: ${({background}) => background};
   cursor: ${({ cursor }) => cursor};
   &:hover {
-    background: ${({hover}) => hover ? '#e0e0e0' : ''};
+    background: #eeeeee;
   }
 `
 

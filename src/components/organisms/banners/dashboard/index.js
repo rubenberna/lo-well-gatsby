@@ -6,6 +6,7 @@ import ControlsDashboard from '../../../molecules/controls/dashboard'
 import ContentTable from '../../../molecules/table'
 import EditEvent from '../../forms/editEvent'
 import EditTherapy from '../../forms/editTherapy'
+import EditTherapist from '../../forms/editTherapist'
 import DeleteForm from '../../forms/delete'
 
 const Dashboard = ({ data, addTimer }) => {
@@ -64,6 +65,11 @@ const Dashboard = ({ data, addTimer }) => {
           therapy={editableDoc} 
           closeForm={closeForm} 
           therapists={therapists} 
+          handleEdit={handleDBQuery}/>
+      case 'edit-about':
+        return <EditTherapist 
+          therapist={editableDoc} 
+          closeForm={closeForm} 
           handleEdit={handleDBQuery}/>
       default:
         break;

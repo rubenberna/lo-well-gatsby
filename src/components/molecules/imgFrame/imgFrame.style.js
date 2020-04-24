@@ -1,6 +1,7 @@
 import styled from 'styled-components'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
-export const RoundImage = styled.img`
+export const RoundImage = styled(LazyLoadImage)`
   margin: 0 auto;
   object-fit: contain;
   width: 100%;
