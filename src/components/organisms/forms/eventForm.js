@@ -2,22 +2,13 @@ import React, { useState, useEffect, useReducer } from 'react'
 import { Form } from 'react-bootstrap'
 import Select from 'react-select';
 
-import { UPDATE_EVENT } from '../../../services/types'
+import { UPDATE_EVENT, CREATE_EVENT } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
 import { FormWrapper, StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms'
 import { Container } from '../../styledComponents/containers'
 import { SubHeader, Paragraph } from '../../styledComponents/typography'
+import { weekdaysList } from '../../_helpers'
 
-const weekdaysList = [
-  { value: 'Ma.', label: 'Ma.' },
-  { value: 'Di.', label: 'Di.' },
-  { value: 'Wo.', label: 'Wo.' },
-  { value: 'Do.', label: 'Do.' },
-  { value: 'Vr.', label: 'Vr.' },
-  { value: 'Za.', label: 'Za.' },
-  { value: 'Zo.', label: 'Zo.' },
-
-]
 function regularVenueReducer(state, action) {
   switch (action.type) {
     case 'set-venues':
@@ -35,26 +26,30 @@ function regularVenueReducer(state, action) {
   }
 }
 
-const EditEvent = ({ event, closeForm, handleEdit }) => {    
-  const name = useFormInput(event.name)
-  const price = useFormInput(event.price)
-  const description = useFormInput(event.description)
-  const location = useFormInput(event.location || '')
-  const date = useFormInput(event.date || '')
+const initialVenue = [
+  {location: '', weekdays: []}
+]
+
+const EventForm = ({ event, closeForm, handleEdit, typeOfAction }) => {    
+  const name = useFormInput(event?.name || '')
+  const price = useFormInput(event?.price || '')
+  const description = useFormInput(event?.description || '')
+  const location = useFormInput(event?.location || '')
+  const date = useFormInput(event?.date || '')
   const extraVenueLocation = useFormInput('')
   const [extraVenueWeekdays, setExtraVenueWeekdays] = useState([])
-  const [regular, setRegular] = useState(event.regular)
+  const [regular, setRegular] = useState(event?.regular || false)
   const [photo, setPhoto] = useState()
   const [showExtraVenue, setShowExtraVenue] = useState(false)
-  const [regularVenue, dispatch] = useReducer(regularVenueReducer, event.regularVenue)
+  const [regularVenue, dispatch] = useReducer(regularVenueReducer, event?.regularVenue || '')
 
   // Change form values when therapy object changes
   useEffect(() => {
-    setRegular(event.regular)
+    setRegular(event?.regular || false)
     setPhoto('')
     dispatch({
       type: 'set-venues',
-      payload: event.regularVenue || []
+      payload: event?.regularVenue || ''
     })
   }, [event])
   
@@ -64,26 +59,26 @@ const EditEvent = ({ event, closeForm, handleEdit }) => {
     setPhoto(file)
   }
 
-
   const handleSubmit = e => {
     e.preventDefault()
+    const type = typeOfAction === 'edit-events' ? UPDATE_EVENT : CREATE_EVENT
 
-    const updatedEvent = {
+    const eventObj = {
       date: date.value,
       description: description.value,
       location: location.value,
       name: name.value,
       photo,
-      photoUrl: event.photoUrl,
+      photoUrl: event?.photoUrl || '',
       price: parseInt(price.value),
       regular,
-      regularVenue,
-      id: event.id
+      regularVenue: regularVenue || initialVenue, 
+      id: event?.id || ''
     }
 
     handleEdit({
-      type: UPDATE_EVENT,
-      obj: updatedEvent
+      type,
+      obj: eventObj
     })
   }
 
@@ -129,10 +124,12 @@ const EditEvent = ({ event, closeForm, handleEdit }) => {
     }  
   }
 
+  const formTitle = typeOfAction === 'edit-events' ? 'Edit form' : 'Create form';
+
   const renderMoreVenuesBtn = () => {
     if (regular) {
       if (!showExtraVenue) return (
-        <button type="button" className="btn btn-success" onClick={() => setShowExtraVenue(true)}>+</button>
+        <button type="button" className="btn btn-light" onClick={() => setShowExtraVenue(true)}>Add venue</button>
       )
       else return (
         <button type="button" className="btn btn-dark" onClick={saveNewVenue}>Add</button>
@@ -160,6 +157,12 @@ const EditEvent = ({ event, closeForm, handleEdit }) => {
             options={weekdaysList}
           />
         </Container>
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={() => setShowExtraVenue(false)}>
+          -
+            </button>
       </StyledFormGroup>
     )
     else return ''
@@ -181,35 +184,39 @@ const EditEvent = ({ event, closeForm, handleEdit }) => {
     else {
       if(regularVenue) {        
         return regularVenue.map((venue, i) => (
-          <StyledFormGroup justify='space-between' key={i} align='flex-end'>
-            <Container>
-              <StyledLabel>Location</StyledLabel>
-              <StyledTextInput 
-                width='400px' 
-                className="form-control" 
-                value={venue.location} 
-                onChange={e => changeVenueLocation({ location: e.target.value, index: i})}
+          <>
+            {venue.location && 
+            <StyledFormGroup justify='space-between' key={i} align='flex-end'>
+              <Container>
+                <StyledLabel>Location</StyledLabel>
+                <StyledTextInput 
+                  width='400px' 
+                  className="form-control" 
+                  value={venue.location} 
+                  onChange={e => changeVenueLocation({ location: e.target.value, index: i})}
+                  />
+              </Container>
+              <Container width='280px'>
+                <StyledLabel>Weekdays</StyledLabel>
+                <Select
+                  isMulti
+                  value={renderWeekDays(venue.weekdays)}
+                  onChange={e => changeVenueWeekdays({ weekdays: e, index: i})}
+                  options={weekdaysList}
                 />
-            </Container>
-            <Container width='280px'>
-              <StyledLabel>Weekdays</StyledLabel>
-              <Select
-                isMulti
-                value={renderWeekDays(venue.weekdays)}
-                onChange={e => changeVenueWeekdays({ weekdays: e, index: i})}
-                options={weekdaysList}
-              />
-            </Container>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => dispatch({
-                type: 'remove-venue',
-                payload: i
-              })}>
-              -
-          </button>
-          </StyledFormGroup>
+              </Container>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => dispatch({
+                  type: 'remove-venue',
+                  payload: i
+                })}>
+                -
+            </button>
+            </StyledFormGroup>
+            }
+          </>
         ))
       } 
     }
@@ -220,7 +227,7 @@ const EditEvent = ({ event, closeForm, handleEdit }) => {
     return (
       <FormWrapper>
         <Container display='flex' justify='space-between'>
-          <SubHeader>Edit form</SubHeader>
+          <SubHeader>{formTitle}</SubHeader>
           <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
         </Container>
         <StyledForm width='100%' onSubmit={handleSubmit}>
@@ -243,8 +250,11 @@ const EditEvent = ({ event, closeForm, handleEdit }) => {
             />
           </StyledFormGroup>
           <StyledFormGroup margin='10px 0' direction='column'>
+          {event && 
             <Paragraph>
-              Current photo: <a href={event.photoUrl} target='_blank' rel="noopener noreferrer">click to see</a></Paragraph>
+              Current photo: <a href={event.photoUrl} target='_blank' rel="noopener noreferrer">click to see</a>
+            </Paragraph>
+          }
             <div className="custom-file">
               <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)} />
               <label className="custom-file-label" htmlFor="customFile">{!photo ? 'New photo?' : photo.name}</label>
@@ -278,4 +288,4 @@ const EditEvent = ({ event, closeForm, handleEdit }) => {
   return renderForm()
 
 }
-export default EditEvent
+export default EventForm

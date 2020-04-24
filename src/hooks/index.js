@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 export const useFormInput = (initialValue) => {  
-  const [value, setValue] = useState(initialValue)
+  const [value, setValue] = useState(initialValue || '')
 
   useEffect(() => {
     setValue(initialValue)
@@ -16,3 +16,4 @@ export const useFormInput = (initialValue) => {
     onChange: handleChange
   }
 }
+

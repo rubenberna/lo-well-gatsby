@@ -4,13 +4,15 @@ import { Container } from '../../styledComponents/containers'
 import { SubHeader } from '../../styledComponents/typography'
 import { STable, StyledTr, MainTd} from './table.style'
 
-const ContentTable = ({ data, handleEditSelection, active, editableDoc}) => {
+const ContentTable = ({ data, handleEditSelection, active, editableDoc }) => {
+
+  let activeFormId = editableDoc ? editableDoc.id : ''
 
   const renderTable = () => (
     data.map(t => (
       <StyledTr 
         key={t.id} 
-        background={editableDoc.id === t.id ? '#e0e0e0' : ''} 
+        background={activeFormId === t.id ? '#e0e0e0' : ''} 
         cursor='pointer'
         >
         <MainTd 
@@ -38,6 +40,15 @@ const ContentTable = ({ data, handleEditSelection, active, editableDoc}) => {
             {renderTable()}
           </tbody>
         </STable>
+        <button 
+          type="submit" 
+          className="btn btn-info" 
+          onClick={() => handleEditSelection({
+            formName: `create-${active}`,
+            doc: undefined
+          })}>
+          Create new
+        </button>
       </Container>
     </Container>
   )

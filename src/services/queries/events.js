@@ -2,8 +2,10 @@ import { events } from '../firebase'
 import { uploadPhoto } from '../hub'
 
 // ------ EVENTS ------ //
-export const createEvent = async (event) => {
+export const createEvent = async (event) => { 
   event.photoUrl = await uploadPhoto(event.photo)
+  delete event.photo
+  delete event.id
   events.add({ ...event })
 }
 

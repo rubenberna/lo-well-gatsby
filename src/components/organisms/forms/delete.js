@@ -22,14 +22,18 @@ const Delete = ({ obj, active, handleDelete }) => {
     })
   }
 
-  return (
-    <>
-      <div className="alert alert-danger" role="alert" onClick={() => setShow(!show) }>
-        Delete {obj.name} ?
+  const renderForm = () => {
+    if(obj) return (
+      <>
+        <div className="alert alert-danger" role="alert" onClick={() => setShow(!show)}>
+          Delete {obj.name} ?
       </div>
-      <DeleteModal show={show} obj={obj} setShow={setShow} deleteObj={deleteObj}/>
-    </>
-  )
+        <DeleteModal show={show} obj={obj} setShow={setShow} deleteObj={deleteObj} />
+      </>
+    )
+    else return ''
+  }
+  return renderForm()
 }
 
 export default Delete

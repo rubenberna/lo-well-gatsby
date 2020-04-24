@@ -4,9 +4,11 @@ import { actionsHub } from '../../../../services/hub'
 import { Container } from '../../../styledComponents/containers'
 import ControlsDashboard from '../../../molecules/controls/dashboard'
 import ContentTable from '../../../molecules/table'
-import EditEvent from '../../forms/editEvent'
+import EventForm from '../../forms/eventForm'
 import EditTherapy from '../../forms/editTherapy'
 import EditTherapist from '../../forms/editTherapist'
+import CreateTherapy from '../../forms/createTherapy'
+import CreateTherapist from '../../forms/createTherapist'
 import DeleteForm from '../../forms/delete'
 
 const Dashboard = ({ data, addTimer }) => {
@@ -56,21 +58,41 @@ const Dashboard = ({ data, addTimer }) => {
   const renderForm = () => {
     switch (showForm) {
       case 'edit-events':
-        return <EditEvent 
+        return <EventForm 
           event={editableDoc} 
           closeForm={closeForm}
+          typeOfAction={showForm}
           handleEdit={handleDBQuery}/>
       case 'edit-therapies':
         return <EditTherapy 
           therapy={editableDoc} 
           closeForm={closeForm} 
+          typeOfAction={showForm}
           therapists={therapists} 
           handleEdit={handleDBQuery}/>
       case 'edit-about':
         return <EditTherapist 
           therapist={editableDoc} 
+          typeOfAction={showForm}
           closeForm={closeForm} 
           handleEdit={handleDBQuery}/>
+      case 'create-events':
+        return <EventForm 
+          typeOfAction={showForm}
+          event={editableDoc}
+          closeForm={closeForm} 
+          handleEdit={handleDBQuery}/>
+      case 'create-therapies':
+        return <CreateTherapy
+          closeForm={closeForm}
+          typeOfAction={showForm}
+          therapists={therapists}
+          handleEdit={handleDBQuery} />
+      case 'create-therapist':
+        return <CreateTherapist
+          closeForm={closeForm}
+          typeOfAction={showForm}
+          handleEdit={handleDBQuery} />
       default:
         break;
     }
