@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import Select from 'react-select';
 
-import { UPDATE_THERAPY } from '../../../services/types'
+import { UPDATE_THERAPY, CREATE_THERAPY } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers';
 import { SubHeader, Paragraph } from '../../styledComponents/typography'
@@ -25,26 +25,26 @@ function paragraphsReducer(state, action) {
 }
 
 
-const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
+const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typeOfAction }) => {
 
-  const name = useFormInput(therapy.name)
-  const heading = useFormInput(therapy.heading)
-  const price = useFormInput(therapy.price)
+  const name = useFormInput(therapy?.name || '')
+  const heading = useFormInput(therapy?.heading || '')
+  const price = useFormInput(therapy?.price || '')
   const extraP = useFormInput('')
-  const [selectedTherapists, setSelectedTherapists] = useState(therapy.therapists.map(t => ({ value: t, label: t })))
+  const [selectedTherapists, setSelectedTherapists] = useState([])
   const [photo, setPhoto] = useState()
-  const [paragraphs, dispatch] = useReducer(paragraphsReducer, therapy.paragraphs)
+  const [paragraphs, dispatch] = useReducer(paragraphsReducer, [])
   const [showExtraP, setShowExtraP] = useState(false)
 
   // Change form values when therapy object changes
   useEffect(() => {
     setPhoto('')
-    setSelectedTherapists(therapy.therapists.map(t => ({ value: t, label: t })))
+    setSelectedTherapists(therapy?.therapists.map(t => ({ value: t, label: t })) || [])
     dispatch({
       type: 'set-paragraphs',
-      payload: therapy.paragraphs
+      payload: therapy?.paragraphs || []
     })
-  }, therapy)
+  }, [therapy])
 
   const changeParagraph = ({ text, index }) => {
     let obj = {
@@ -126,7 +126,9 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const updatedTherapy = {
+    const type = typeOfAction === 'edit-therapies' ? UPDATE_THERAPY : CREATE_THERAPY
+
+    const therapyObj = {
       name: name.value,
       heading: heading.value,
       price: price.value,
@@ -134,21 +136,23 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
       slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
       photo,
       therapists: selectedTherapists.map(t => t.value),
-      id: therapy.id,
-      photoUrl: therapy.photoUrl
+      id: therapy?.id || '',
+      photoUrl: therapy?.photoUrl || ''
     }
 
-    handleEdit({
-      type: UPDATE_THERAPY,
-      obj: updatedTherapy
+    handleFormSubmission({
+      type,
+      obj: therapyObj
     })
   }
+
+  const formTitle = typeOfAction === 'edit-therapies' ? 'Edit therapy' : 'Create therapy';
 
   const renderForm = () => {
     return (
       <FormWrapper>
         <Container display='flex' justify='space-between'>
-          <SubHeader>Edit form</SubHeader>
+          <SubHeader>{formTitle}</SubHeader>
           <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
         </Container>
         <StyledForm width='100%' onSubmit={handleSubmit}>
@@ -170,8 +174,15 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
           {renderMoreParagraphsBtn()}
           {renderExtraP()}
           <Container margin='10px 0'>
-            <Paragraph>
-              Current photo: <a href={therapy.photoUrl} target='_blank' rel="noopener noreferrer">click to see</a></Paragraph>
+            {
+              therapy &&
+              <Paragraph>
+                Current photo: {' '}
+              <a href={therapy.photoUrl} target='_blank' rel="noopener noreferrer">
+                  click to see
+              </a>
+              </Paragraph>
+            }
             <div className="custom-file">
               <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)}/>
               <label className="custom-file-label" htmlFor="customFile">{!photo ? 'New photo?' : photo.name}</label>
@@ -200,5 +211,7 @@ const EditTherapy = ({ therapy, closeForm, therapists, handleEdit }) => {
   return renderForm()
 
 }
-export default EditTherapy
+export default TherapyForm
+
+
 

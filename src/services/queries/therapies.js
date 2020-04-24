@@ -5,6 +5,8 @@ import { uploadPhoto } from '../hub'
 
 export const createTherapy = async (therapy) => {
   therapy.photoUrl = await uploadPhoto(therapy.photo)
+  delete therapy.photo
+  delete therapy.id
   therapies.add({ ...therapy })
 }
 

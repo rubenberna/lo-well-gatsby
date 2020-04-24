@@ -5,9 +5,8 @@ import { Container } from '../../../styledComponents/containers'
 import ControlsDashboard from '../../../molecules/controls/dashboard'
 import ContentTable from '../../../molecules/table'
 import EventForm from '../../forms/eventForm'
-import EditTherapy from '../../forms/editTherapy'
+import TherapyForm from '../../forms/therapyForm'
 import TherapistForm from '../../forms/therapistForm'
-import CreateTherapy from '../../forms/createTherapy'
 import DeleteForm from '../../forms/delete'
 
 const Dashboard = ({ data, addTimer }) => {
@@ -61,36 +60,36 @@ const Dashboard = ({ data, addTimer }) => {
           event={editableDoc} 
           closeForm={closeForm}
           typeOfAction={showForm}
-          handleEdit={handleDBQuery}/>
+          handleFormSubmission={handleDBQuery}/>
       case 'edit-therapies':
-        return <EditTherapy 
+        return <TherapyForm 
           therapy={editableDoc} 
           closeForm={closeForm} 
           typeOfAction={showForm}
           therapists={therapists} 
-          handleEdit={handleDBQuery}/>
+          handleFormSubmission={handleDBQuery}/>
       case 'edit-about':
         return <TherapistForm 
           therapist={editableDoc} 
           typeOfAction={showForm}
           closeForm={closeForm} 
-          handleEdit={handleDBQuery}/>
+          handleFormSubmission={handleDBQuery}/>
       case 'create-events':
         return <EventForm 
           typeOfAction={showForm}
           closeForm={closeForm} 
-          handleEdit={handleDBQuery}/>
+          handleFormSubmission={handleDBQuery}/>
       case 'create-therapies':
-        return <CreateTherapy
+        return <TherapyForm
           closeForm={closeForm}
           typeOfAction={showForm}
           therapists={therapists}
-          handleEdit={handleDBQuery} />
+          handleFormSubmission={handleDBQuery} />
       case 'create-about':
         return <TherapistForm
           closeForm={closeForm}
           typeOfAction={showForm}
-          handleEdit={handleDBQuery} />
+          handleFormSubmission={handleDBQuery} />
       default:
         break;
     }

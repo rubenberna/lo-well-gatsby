@@ -6,7 +6,7 @@ import { Container } from '../../styledComponents/containers'
 import { SubHeader, Paragraph } from '../../styledComponents/typography'
 import { FormWrapper, StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms'
 
-const TherapistForm = ({ therapist, closeForm, handleEdit, typeOfAction }) => {
+const TherapistForm = ({ therapist, closeForm, handleFormSubmission, typeOfAction }) => {
   const name = useFormInput(therapist?.name || '')
   const email = useFormInput(therapist?.email || '')
   const phone = useFormInput(therapist?.phone || '')
@@ -20,7 +20,8 @@ const TherapistForm = ({ therapist, closeForm, handleEdit, typeOfAction }) => {
   const handleSubmit = e => {
     e.preventDefault()
     const type = typeOfAction === 'edit-about' ? UPDATE_THERAPIST : CREATE_THERAPIST
-    const updatedTherapist = {
+
+    const therapistObj = {
       email: email.value,
       intro: intro.value,
       name: name.value,
@@ -30,9 +31,9 @@ const TherapistForm = ({ therapist, closeForm, handleEdit, typeOfAction }) => {
       id: therapist?.id || ''
     }    
 
-    handleEdit({
+    handleFormSubmission({
       type,
-      obj: updatedTherapist
+      obj: therapistObj
     })
   }
 
@@ -41,10 +42,12 @@ const TherapistForm = ({ therapist, closeForm, handleEdit, typeOfAction }) => {
     setPhoto(file)
   }
 
+  const formTitle = typeOfAction === 'edit-about' ? 'Edit therapist' : 'Create therapist';
+
   const renderForm = () => (
     <FormWrapper>
       <Container display='flex' justify='space-between'>
-        <SubHeader>Edit form</SubHeader>
+        <SubHeader>{formTitle}</SubHeader>
         <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
       </Container>
       <StyledForm width='100%' onSubmit={handleSubmit}>

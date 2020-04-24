@@ -30,7 +30,7 @@ const initialVenue = [
   {location: '', weekdays: []}
 ]
 
-const EventForm = ({ event, closeForm, handleEdit, typeOfAction }) => {    
+const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => {    
   const name = useFormInput(event?.name || '')
   const price = useFormInput(event?.price || '')
   const description = useFormInput(event?.description || '')
@@ -76,7 +76,7 @@ const EventForm = ({ event, closeForm, handleEdit, typeOfAction }) => {
       id: event?.id || ''
     }
 
-    handleEdit({
+    handleFormSubmission({
       type,
       obj: eventObj
     })
@@ -124,7 +124,7 @@ const EventForm = ({ event, closeForm, handleEdit, typeOfAction }) => {
     }  
   }
 
-  const formTitle = typeOfAction === 'edit-events' ? 'Edit form' : 'Create form';
+  const formTitle = typeOfAction === 'edit-events' ? 'Edit event' : 'Create event';
 
   const renderMoreVenuesBtn = () => {
     if (regular) {
