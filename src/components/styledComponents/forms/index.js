@@ -26,6 +26,6 @@ export const FormWrapper = styled.div`
   align-self: flex-start;
   margin: 60px 10px 20px 0;
   padding: 20px;
-  border: 2px dashed;
+  border: ${({ validForm }) => validForm === 'success' ? '2px dashed green' : (validForm === 'danger' ? '2px dashed red' : '2px dashed')};
   border-radius: 5px;
 `

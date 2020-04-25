@@ -7,6 +7,7 @@ import { useFormInput } from '../../../hooks'
 import { Container } from '../../styledComponents/containers';
 import { SubHeader, Paragraph } from '../../styledComponents/typography'
 import { FormWrapper, StyledForm, StyledFormGroup, StyledTextInput, StyledLabel } from '../../styledComponents/forms'
+import { FormAlert } from '../../molecules/alerts'
 
 function paragraphsReducer(state, action) {
   switch (action.type) {
@@ -35,6 +36,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
   const [photo, setPhoto] = useState()
   const [paragraphs, dispatch] = useReducer(paragraphsReducer, [])
   const [showExtraP, setShowExtraP] = useState(false)
+  const [validForm, setValidForm] = useState('')
 
   // Change form values when therapy object changes
   useEffect(() => {
@@ -53,7 +55,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
     const therapyObj = {
       name: name.value,
       heading: heading.value,
-      price: parseInt(price.value),
+      price: parseInt(price.value) || 0,
       paragraphs: paragraphs,
       slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
       photo,
@@ -64,20 +66,20 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
 
     let valid = validate(therapyObj)
     if (!valid) {
-      alert('Form Incomplete!')
+      setValidForm('danger')
     } else {
-      // handleFormSubmission({
-      //   type,
-      //   obj: therapyObj
-      // })
-      alert('Ready')
+      setValidForm('success')
+      setTimeout(() => handleFormSubmission({
+        type,
+        obj: therapyObj
+      }), 5000)
     }
   }
 
   const validate = (therapyObj) => {
     let validationObj = _.omit(therapyObj, ['id', 'photoUrl', 'photo'])
 
-    if(!therapy && !photo) return false
+    if (!therapy && !photo) return false
 
     function checkIfEmpty(el) {
       return el.length > 0 || typeof el === 'number'
@@ -87,7 +89,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
   }
 
   const changeParagraph = ({ text, index }) => {
-    let obj = {index, text}
+    let obj = { index, text }
     dispatch({
       type: 'change-paragraph',
       payload: obj
@@ -109,7 +111,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
   }
 
   const renderMoreParagraphsBtn = () => {
-    if(!paragraphs.length) return ''
+    if (!paragraphs.length) return ''
     if (!showExtraP) return (
       <button type="button" className="btn btn-success" onClick={() => setShowExtraP(true)}>+</button>
     )
@@ -143,7 +145,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
   )
 
   const renderFirstParagraph = () => {
-    if(!paragraphs.length) return (
+    if (!paragraphs.length) return (
       <>
         <Container margin='10px 0'>
           <Paragraph>First Paragraph</Paragraph>
@@ -153,9 +155,9 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
               rows="3"
               {...extraP} />
           </Container>
-          <button 
-            type="button" 
-            className="btn btn-dark" 
+          <button
+            type="button"
+            className="btn btn-dark"
             onClick={saveNewParagraph}>
             Save
           </button>
@@ -189,62 +191,67 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
 
   const renderForm = () => {
     return (
-      <FormWrapper>
-        <Container display='flex' justify='space-between'>
-          <SubHeader>{formTitle}</SubHeader>
-          <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
-        </Container>
-        <StyledForm width='100%' onSubmit={handleSubmit}>
-          <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
-            <Container>
-              <StyledLabel>Name</StyledLabel>
-              <StyledTextInput width='300px' className="form-control" {...name} />
-            </Container>
-            <Container>
-              <StyledLabel>Price</StyledLabel>
-              <StyledTextInput width='50px' type='number' className="form-control" {...price} />
-            </Container>
+      <>
+        <FormAlert show={validForm} setShow={setValidForm} />
+        <FormWrapper
+          validForm={validForm}
+          onFocus={() => setValidForm('')}>
+          <Container display='flex' justify='space-between'>
+            <SubHeader>{formTitle}</SubHeader>
+            <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
           </Container>
-          <StyledFormGroup direction='column'>
-            <StyledLabel>Heading</StyledLabel>
-            <StyledTextInput className="form-control" {...heading} />
-          </StyledFormGroup>
-          {renderExistingParagraphs()}
-          {renderFirstParagraph()}
-          {renderMoreParagraphsBtn()}
-          {renderExtraP()}
-          <Container margin='10px 0'>
-            {
-              therapy &&
-              <Paragraph>
-                Current photo: {' '}
-              <a href={therapy.photoUrl} target='_blank' rel="noopener noreferrer">
-                  click to see
-              </a>
-              </Paragraph>
-            }
-            <div className="custom-file">
-              <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)}/>
-              <label className="custom-file-label" htmlFor="customFile">{!photo ? 'New photo?' : photo.name}</label>
-            </div>
+          <StyledForm width='100%' onSubmit={handleSubmit}>
+            <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
+              <Container>
+                <StyledLabel>Name</StyledLabel>
+                <StyledTextInput width='300px' className="form-control" {...name} />
+              </Container>
+              <Container>
+                <StyledLabel>Price</StyledLabel>
+                <StyledTextInput width='50px' type='number' className="form-control" {...price} />
+              </Container>
+            </Container>
+            <StyledFormGroup direction='column'>
+              <StyledLabel>Heading</StyledLabel>
+              <StyledTextInput className="form-control" {...heading} />
+            </StyledFormGroup>
+            {renderExistingParagraphs()}
+            {renderFirstParagraph()}
+            {renderMoreParagraphsBtn()}
+            {renderExtraP()}
             <Container margin='10px 0'>
-              {photo &&
-                <button type="button" className="btn btn-light" onClick={e => setPhoto('')}>Clear uploaded photo</button>
+              {
+                therapy &&
+                <Paragraph>
+                  Current photo: {' '}
+                  <a href={therapy.photoUrl} target='_blank' rel="noopener noreferrer">
+                    click to see
+              </a>
+                </Paragraph>
               }
+              <div className="custom-file">
+                <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)} />
+                <label className="custom-file-label" htmlFor="customFile">{!photo ? 'New photo?' : photo.name}</label>
+              </div>
+              <Container margin='10px 0'>
+                {photo &&
+                  <button type="button" className="btn btn-light" onClick={e => setPhoto('')}>Clear uploaded photo</button>
+                }
+              </Container>
             </Container>
-          </Container>
-          <Container margin='10px 0'>
-          <Paragraph>Current therapists:</Paragraph>
-            <Select
-              isMulti
-              value={selectedTherapists}
-              onChange={e => setSelectedTherapists(e)}
-              options={optionsList}
-            />
-          </Container>
-          <button type="submit" className="btn btn-primary">Save</button>
-        </StyledForm>
-      </FormWrapper>
+            <Container margin='10px 0'>
+              <Paragraph>Current therapists:</Paragraph>
+              <Select
+                isMulti
+                value={selectedTherapists}
+                onChange={e => setSelectedTherapists(e)}
+                options={optionsList}
+              />
+            </Container>
+            <button type="submit" className="btn btn-primary">Save</button>
+          </StyledForm>
+        </FormWrapper>
+      </>
     )
   }
 

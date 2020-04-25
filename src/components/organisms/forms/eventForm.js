@@ -9,6 +9,7 @@ import { FormWrapper, StyledForm, StyledFormGroup, StyledTextInput, StyledLabel 
 import { Container } from '../../styledComponents/containers'
 import { SubHeader, Paragraph } from '../../styledComponents/typography'
 import { weekdaysList } from '../../_helpers'
+import { FormAlert } from '../../molecules/alerts'
 
 function regularVenueReducer(state, action) {
   switch (action.type) {
@@ -21,17 +22,17 @@ function regularVenueReducer(state, action) {
     case 'change-venue':
       return state.map((el, i) => i === action.payload.index ? action.payload.venue : el)
     case 'add-venue':
-      return [...state, action.payload ]
+      return [...state, action.payload]
     default:
       return state;
   }
 }
 
 const initialVenue = [
-  {location: '', weekdays: []}
+  { location: '', weekdays: [] }
 ]
 
-const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => {    
+const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => {
   const name = useFormInput(event?.name || '')
   const price = useFormInput(event?.price || 0)
   const description = useFormInput(event?.description || '')
@@ -43,6 +44,7 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
   const [photo, setPhoto] = useState()
   const [showExtraVenue, setShowExtraVenue] = useState(false)
   const [regularVenue, dispatch] = useReducer(regularVenueReducer, event?.regularVenue || '')
+  const [validForm, setValidForm] = useState('')
 
   // Change form values when therapy object changes
   useEffect(() => {
@@ -53,7 +55,7 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
       payload: event?.regularVenue || ''
     })
   }, [event])
-  
+
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
@@ -71,22 +73,22 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
       name: name.value,
       photo,
       photoUrl: event?.photoUrl || '',
-      price: parseInt(price.value),
+      price: parseInt(price.value) || 0,
       regular,
-      regularVenue: regularVenue || initialVenue, 
+      regularVenue: regularVenue || initialVenue,
       id: event?.id || ''
     }
 
     let valid = validate(eventObj)
 
-    if(!valid) {
-      alert('Form Incomplete!')
+    if (!valid) {
+      setValidForm('danger')
     } else {
-      alert('Ready')
-      // handleFormSubmission({
-      //   type,
-      //   obj: eventObj
-      // })
+      setValidForm('success')
+      setTimeout(() => handleFormSubmission({
+        type,
+        obj: eventObj
+      }), 5000)
     }
   }
 
@@ -97,27 +99,27 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
     if (!regular && (!date.value || !location.value)) return false
     if (regular && !regularVenue[0]) return false
 
-    function checkIfEmpty(el){
+    function checkIfEmpty(el) {
       return el.length > 0 || typeof el === 'number'
     }
 
-    let complete = Object.values(validationObj).every(checkIfEmpty)    
+    let complete = Object.values(validationObj).every(checkIfEmpty)
     return complete
   }
 
-  const changeVenueLocation = ({ location, index}) => {
+  const changeVenueLocation = ({ location, index }) => {
     let currVenue = regularVenue[index]
     currVenue.location = location
-    changeVenue(currVenue, index) 
+    changeVenue(currVenue, index)
   }
 
   const changeVenueWeekdays = ({ weekdays, index }) => {
     let currVenue = regularVenue[index]
     currVenue.weekdays = weekdays.map(w => w.value)
-    changeVenue(currVenue, index) 
+    changeVenue(currVenue, index)
   }
 
-  const changeVenue = (venue, index) => {    
+  const changeVenue = (venue, index) => {
     let obj = {
       index,
       venue
@@ -141,10 +143,10 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
     setShowExtraVenue(false)
   }
 
-  const renderWeekDays = (list) => {  
-    if(list) {
-      return list.map((t, i) => ({ value: t, label: t}))
-    }  
+  const renderWeekDays = (list) => {
+    if (list) {
+      return list.map((t, i) => ({ value: t, label: t }))
+    }
   }
 
   const formTitle = typeOfAction === 'edit-events' ? 'Edit event' : 'Create event';
@@ -192,7 +194,7 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
   }
 
   const conditionalRenderVenue = () => {
-    if(!regular) return (
+    if (!regular) return (
       <StyledFormGroup justify='space-between'>
         <Container>
           <StyledLabel>Location</StyledLabel>
@@ -201,110 +203,115 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
         <Container>
           <StyledLabel>Date</StyledLabel>
           <StyledTextInput type='date' className="form-control" {...date} />
-        </Container>        
+        </Container>
       </StyledFormGroup>
     )
     else {
-      if(regularVenue) {        
+      if (regularVenue) {
         return regularVenue.map((venue, i) => (
           <div key={i}>
-            {venue.location && 
-            <StyledFormGroup justify='space-between' align='flex-end'>
-              <Container>
-                <StyledLabel>Location</StyledLabel>
-                <StyledTextInput 
-                  width='400px' 
-                  className="form-control" 
-                  value={venue.location} 
-                  onChange={e => changeVenueLocation({ location: e.target.value, index: i})}
+            {venue.location &&
+              <StyledFormGroup justify='space-between' align='flex-end'>
+                <Container>
+                  <StyledLabel>Location</StyledLabel>
+                  <StyledTextInput
+                    width='400px'
+                    className="form-control"
+                    value={venue.location}
+                    onChange={e => changeVenueLocation({ location: e.target.value, index: i })}
                   />
-              </Container>
-              <Container width='280px'>
-                <StyledLabel>Weekdays</StyledLabel>
-                <Select
-                  isMulti
-                  value={renderWeekDays(venue.weekdays)}
-                  onChange={e => changeVenueWeekdays({ weekdays: e, index: i})}
-                  options={weekdaysList}
-                />
-              </Container>
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={() => dispatch({
-                  type: 'remove-venue',
-                  payload: i
-                })}>
-                -
+                </Container>
+                <Container width='280px'>
+                  <StyledLabel>Weekdays</StyledLabel>
+                  <Select
+                    isMulti
+                    value={renderWeekDays(venue.weekdays)}
+                    onChange={e => changeVenueWeekdays({ weekdays: e, index: i })}
+                    options={weekdaysList}
+                  />
+                </Container>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => dispatch({
+                    type: 'remove-venue',
+                    payload: i
+                  })}>
+                  -
             </button>
-            </StyledFormGroup>
+              </StyledFormGroup>
             }
           </div>
         ))
-      } 
+      }
     }
   }
 
- 
+
   const renderForm = () => {
     return (
-      <FormWrapper>
-        <Container display='flex' justify='space-between'>
-          <SubHeader>{formTitle}</SubHeader>
-          <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
-        </Container>
-        <StyledForm width='100%' onSubmit={handleSubmit}>
-          <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
-            <Container>
-              <StyledLabel>Name</StyledLabel>
-              <StyledTextInput width='300px' className="form-control" {...name} />
-            </Container>
-            <Container>
-              <StyledLabel>Price</StyledLabel>
-              <StyledTextInput width='50px' type='number' className="form-control" {...price} />
-            </Container>
+      <>
+        <FormAlert show={validForm} setShow={setValidForm} />
+        <FormWrapper
+          validForm={validForm}
+          onFocus={() => setValidForm('')}>
+          <Container display='flex' justify='space-between'>
+            <SubHeader>{formTitle}</SubHeader>
+            <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
           </Container>
-          <StyledFormGroup direction='column'>
-            <StyledLabel>Description</StyledLabel>
-            <textarea
-              className="form-control"
-              rows="6"
-              {...description}
-            />
-          </StyledFormGroup>
-          <StyledFormGroup margin='10px 0' direction='column'>
-          {event && 
-            <Paragraph>
-              Current photo: <a href={event.photoUrl} target='_blank' rel="noopener noreferrer">click to see</a>
-            </Paragraph>
-          }
-            <div className="custom-file">
-              <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)} />
-              <label className="custom-file-label" htmlFor="customFile">{!photo ? 'New photo?' : photo.name}</label>
-            </div>
-            <Container margin='10px 0'>
-              {photo &&
-                <button type="button" className="btn btn-light" onClick={e => setPhoto('')}>Clear uploaded photo</button>
+          <StyledForm width='100%' onSubmit={handleSubmit}>
+            <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
+              <Container>
+                <StyledLabel>Name</StyledLabel>
+                <StyledTextInput width='300px' className="form-control" {...name} />
+              </Container>
+              <Container>
+                <StyledLabel>Price</StyledLabel>
+                <StyledTextInput width='50px' type='number' className="form-control" {...price} />
+              </Container>
+            </Container>
+            <StyledFormGroup direction='column'>
+              <StyledLabel>Description</StyledLabel>
+              <textarea
+                className="form-control"
+                rows="6"
+                {...description}
+              />
+            </StyledFormGroup>
+            <StyledFormGroup margin='10px 0' direction='column'>
+              {event &&
+                <Paragraph>
+                  Current photo: <a href={event.photoUrl} target='_blank' rel="noopener noreferrer">click to see</a>
+                </Paragraph>
               }
+              <div className="custom-file">
+                <input type="file" className="custom-file-input" id="customFile" onChange={e => handleFileUpload(e)} />
+                <label className="custom-file-label" htmlFor="customFile">{!photo ? 'New photo?' : photo.name}</label>
+              </div>
+              <Container margin='10px 0'>
+                {photo &&
+                  <button type="button" className="btn btn-light" onClick={e => setPhoto('')}>Clear uploaded photo</button>
+                }
+              </Container>
+            </StyledFormGroup>
+            <StyledFormGroup>
+              <Form.Check
+                type="switch"
+                id="custom-switch"
+                label={regular ? 'Weekly event' : 'Occasional event'}
+                checked={regular}
+                onChange={() => setRegular(!regular)}
+              />
+            </StyledFormGroup>
+            {conditionalRenderVenue()}
+            {renderMoreVenuesBtn()}
+            {renderExtraVenue()}
+            <Container margin='10px 0'>
+              <button type="submit" className="btn btn-primary">Save</button>
             </Container>
-          </StyledFormGroup>
-          <StyledFormGroup>
-            <Form.Check
-              type="switch"
-              id="custom-switch"
-              label={regular ? 'Weekly event' : 'Occasional event'}
-              checked={regular}
-              onChange={() => setRegular(!regular)}
-            />
-          </StyledFormGroup>
-          {conditionalRenderVenue()}
-          {renderMoreVenuesBtn()}
-          {renderExtraVenue()}
-          <Container margin='10px 0'>
-            <button type="submit" className="btn btn-primary">Save</button>
-          </Container>
-        </StyledForm>
-      </FormWrapper>
+          </StyledForm>
+        </FormWrapper>
+      </>
     )
   }
 
