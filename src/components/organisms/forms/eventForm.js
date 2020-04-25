@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react'
+import _ from 'lodash'
 import { Form } from 'react-bootstrap'
 import Select from 'react-select';
 
@@ -32,7 +33,7 @@ const initialVenue = [
 
 const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => {    
   const name = useFormInput(event?.name || '')
-  const price = useFormInput(event?.price || '')
+  const price = useFormInput(event?.price || 0)
   const description = useFormInput(event?.description || '')
   const location = useFormInput(event?.location || '')
   const date = useFormInput(event?.date || '')
@@ -76,10 +77,32 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
       id: event?.id || ''
     }
 
-    handleFormSubmission({
-      type,
-      obj: eventObj
-    })
+    let valid = validate(eventObj)
+
+    if(!valid) {
+      alert('Form Incomplete!')
+    } else {
+      alert('Ready')
+      // handleFormSubmission({
+      //   type,
+      //   obj: eventObj
+      // })
+    }
+  }
+
+  const validate = (eventObj) => {
+    let validationObj = _.omit(eventObj, ['id', 'photoUrl', 'photo', 'date', 'location', 'regularVenue', 'regular'])
+
+    if (!event && !photo) return false
+    if (!regular && (!date.value || !location.value)) return false
+    if (regular && !regularVenue[0]) return false
+
+    function checkIfEmpty(el){
+      return el.length > 0 || typeof el === 'number'
+    }
+
+    let complete = Object.values(validationObj).every(checkIfEmpty)    
+    return complete
   }
 
   const changeVenueLocation = ({ location, index}) => {

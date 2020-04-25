@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import _ from 'lodash'
 
 import { UPDATE_THERAPIST, CREATE_THERAPIST } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
@@ -31,10 +32,23 @@ const TherapistForm = ({ therapist, closeForm, handleFormSubmission, typeOfActio
       id: therapist?.id || ''
     }    
 
-    handleFormSubmission({
-      type,
-      obj: therapistObj
-    })
+    let valid = validate(therapistObj)
+
+    if (!valid) {
+      alert('Form Incomplete!')
+    } else {
+      // handleFormSubmission({
+      //   type,
+      //   obj: therapistObj
+      // })
+      alert('Ready')
+    }
+  }
+
+  const validate = (therapistObj) => {
+    let validationObj = _.omit(therapistObj, ['id', 'photoUrl'])
+    let complete = Object.values(validationObj).every(el => el.length > 0)
+    return complete
   }
 
   const handleFileUpload = (e) => {

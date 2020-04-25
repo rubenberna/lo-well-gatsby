@@ -1,5 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react'
 import Select from 'react-select';
+import _ from 'lodash'
 
 import { UPDATE_THERAPY, CREATE_THERAPY } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
@@ -24,12 +25,11 @@ function paragraphsReducer(state, action) {
   }
 }
 
-
 const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typeOfAction }) => {
 
   const name = useFormInput(therapy?.name || '')
   const heading = useFormInput(therapy?.heading || '')
-  const price = useFormInput(therapy?.price || '')
+  const price = useFormInput(therapy?.price || 0)
   const extraP = useFormInput('')
   const [selectedTherapists, setSelectedTherapists] = useState([])
   const [photo, setPhoto] = useState()
@@ -46,11 +46,48 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
     })
   }, [therapy])
 
-  const changeParagraph = ({ text, index }) => {
-    let obj = {
-      index,
-      text
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const type = typeOfAction === 'edit-therapies' ? UPDATE_THERAPY : CREATE_THERAPY
+
+    const therapyObj = {
+      name: name.value,
+      heading: heading.value,
+      price: parseInt(price.value),
+      paragraphs: paragraphs,
+      slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
+      photo,
+      therapists: selectedTherapists?.map(t => t.value) || [],
+      id: therapy?.id || '',
+      photoUrl: therapy?.photoUrl || ''
     }
+
+    let valid = validate(therapyObj)
+    if (!valid) {
+      alert('Form Incomplete!')
+    } else {
+      // handleFormSubmission({
+      //   type,
+      //   obj: therapyObj
+      // })
+      alert('Ready')
+    }
+  }
+
+  const validate = (therapyObj) => {
+    let validationObj = _.omit(therapyObj, ['id', 'photoUrl', 'photo'])
+
+    if(!therapy && !photo) return false
+
+    function checkIfEmpty(el) {
+      return el.length > 0 || typeof el === 'number'
+    }
+    let complete = Object.values(validationObj).every(checkIfEmpty)
+    return complete
+  }
+
+  const changeParagraph = ({ text, index }) => {
+    let obj = {index, text}
     dispatch({
       type: 'change-paragraph',
       payload: obj
@@ -147,28 +184,6 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
   }
 
   const optionsList = therapists.map(t => ({ value: t.name, label: t.name }))
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const type = typeOfAction === 'edit-therapies' ? UPDATE_THERAPY : CREATE_THERAPY
-
-    const therapyObj = {
-      name: name.value,
-      heading: heading.value,
-      price: price.value,
-      paragraphs,
-      slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
-      photo,
-      therapists: selectedTherapists.map(t => t.value),
-      id: therapy?.id || '',
-      photoUrl: therapy?.photoUrl || ''
-    }
-
-    handleFormSubmission({
-      type,
-      obj: therapyObj
-    })
-  }
 
   const formTitle = typeOfAction === 'edit-therapies' ? 'Edit therapy' : 'Create therapy';
 
