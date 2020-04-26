@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container } from '../../styledComponents/containers'
 import TherapistCard from '../cards/therapistCard'
 import ContactForm from '../cards/contactForm'
-import AboutPlaceholder from '../placeholders'
+import {AboutPlaceholder} from '../placeholders'
 const Presentation = ({ presentationObj }) => {
   const [loading, setLoading] = useState(true)
 

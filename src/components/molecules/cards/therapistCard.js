@@ -11,13 +11,13 @@ const TherapistCard = ({ therapist }) => (
     radius='4px'
     >
     <Container width='300px' height='300px'>
-    <StyledImage 
-      src={therapist.photoUrl} 
-      alt={therapist.name}
-      width='300px'
-      height='300px'
-      fit='contain'
-      />
+      <StyledImage 
+        src={therapist.photoUrl} 
+        alt={therapist.name}
+        width='300px'
+        height='300px'
+        fit='contain'
+        />
     </Container>
     <Intro>
       {{
