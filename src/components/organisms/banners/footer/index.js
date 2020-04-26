@@ -9,7 +9,7 @@ const noMargin = {
   marginBottom: 0
 }
 
-const Footer = () => {
+const Footer = ({ siteTitle }) => {
   return(
     <Container 
       position='relative'
@@ -21,7 +21,7 @@ const Footer = () => {
       <Container margin='0 120px' padding='15px 0'>
         <Container display='flex' justify='space-between'>
           <Container width='20%' display='flex' justify='center' align='center' direction='column'>
-            <SubHeader fontFamily="'Kaushan Script', cursive">Lo-well</SubHeader>
+            <SubHeader fontFamily="'Kaushan Script', cursive">{siteTitle}</SubHeader>
             <SubHeader fontFamily="'Kaushan Script', cursive">Terug in balans</SubHeader>
           </Container>
           <Container display='flex' direction='column' width='20%' align='center'>

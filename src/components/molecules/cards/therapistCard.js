@@ -10,6 +10,7 @@ const TherapistCard = ({ therapist }) => (
     padding='39px'
     radius='4px'
     >
+    <Container width='300px' height='300px'>
     <StyledImage 
       src={therapist.photoUrl} 
       alt={therapist.name}
@@ -17,6 +18,7 @@ const TherapistCard = ({ therapist }) => (
       height='300px'
       fit='contain'
       />
+    </Container>
     <Intro>
       {{
         subHeader: therapist.name,
