@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'gatsby'
 
 import SEO from "../components/seo"
@@ -7,15 +7,8 @@ import { Header, SubHeader, Paragraph } from '../components/styledComponents/typ
 import Ribbon from '../components/molecules/ribbon'
 import { Container, Paralax } from '../components/styledComponents/containers'
 import { secondaryColor } from '../components/styledComponents/variables'
-import { TherapyPlaceholder } from '../components/molecules/placeholders'
 
 const TherapyTemplate = ({ pageContext }) => {
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 300)
-    return () => clearTimeout(loading)
-  }, [loading, setLoading])
 
   const {
     name,
@@ -32,46 +25,39 @@ const TherapyTemplate = ({ pageContext }) => {
       return <span>{therapists[0]} en {therapists[1]}</span>
     else return <span>{therapists}</span>
   }
-  
-  const renderContent = () => {
-    if(loading) return (
-      <Container height='600px' display='flex' justify='center' align='center'>
-        <TherapyPlaceholder/>
-      </Container>
-    )
-    else return (
-      <Container
-        margin='0 auto'
-        maxWidth='960px'
-        padding='0 1.0875rem 1.45rem'
-      >
-        <Container height='440px'>
-          <Container position='relative'>
-            <Paralax
-              url={photoUrl}
-              width='100%'
-              height='350px'
-              position='absolute'
-              display='flex'
-              justify='center'
-              align='center'
-              direction='column'
-            >
-              <SubHeader color='#fff' opacity='0.8'>{name}</SubHeader>
-              <Header color='#fff' weight='600'>{heading}</Header>
-            </Paralax>
-          </Container>
-        </Container>
-        <Container width='100%'>
-          {renderParagraphs}
-        </Container>
-        <Link to='/about' state={{ active: 'contact' }}>
-          <Paragraph weight='600'>Therapists: {renderTherapists()}</Paragraph>
-        </Link>
-      </Container>
-    )
 
-  }
+  const renderContent = () => (
+    <Container
+      margin='0 auto'
+      maxWidth='960px'
+      padding='0 1.0875rem 1.45rem'
+    >
+      <Container height='440px'>
+        <Container position='relative'>
+          <Paralax
+            url={photoUrl}
+            width='100%'
+            height='350px'
+            position='absolute'
+            display='flex'
+            justify='center'
+            align='center'
+            direction='column'
+          >
+            <SubHeader color='#fff' opacity='0.8'>{name}</SubHeader>
+            <Header color='#fff' weight='600'>{heading}</Header>
+          </Paralax>
+        </Container>
+      </Container>
+      <Container width='100%'>
+        {renderParagraphs}
+      </Container>
+      <Link to='/about' state={{ active: 'contact' }}>
+        <Paragraph weight='600'>Therapists: {renderTherapists()}</Paragraph>
+      </Link>
+    </Container>
+  )
+
   return (
     <Layout>
       <SEO title={name} />
