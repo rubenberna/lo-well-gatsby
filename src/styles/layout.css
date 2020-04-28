@@ -36,3 +36,12 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.card {
+  justify-self: center;
+}
+
+.card-img-top {
+  height: 228px;
+  object-fit: cover;
+}

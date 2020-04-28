@@ -34,6 +34,7 @@ const initialVenue = [
 
 const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => {
   const name = useFormInput(event?.name || '')
+  const intro = useFormInput(event?.intro || '')
   const price = useFormInput(event?.price || 0)
   const description = useFormInput(event?.description || '')
   const location = useFormInput(event?.location || '')
@@ -71,7 +72,9 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
       description: description.value,
       location: location.value,
       name: name.value,
+      intro: intro.value,
       photo,
+      slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
       photoUrl: event?.photoUrl || '',
       price: parseInt(price.value) || 0,
       regular,
@@ -270,6 +273,10 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
                 <StyledTextInput width='50px' type='number' className="form-control" {...price} />
               </Container>
             </Container>
+            <StyledFormGroup direction='column'>
+              <StyledLabel>Homepage intro</StyledLabel>
+              <StyledTextInput className="form-control" {...intro} />
+            </StyledFormGroup>
             <StyledFormGroup direction='column'>
               <StyledLabel>Description</StyledLabel>
               <textarea

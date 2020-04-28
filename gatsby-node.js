@@ -64,30 +64,52 @@ exports.sourceNodes = async ({
   })
 }
 
+// Create Pages per therapy
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   const therapyTemplate = path.resolve(`src/templates/therapy.js`)
+  const eventTemplate = path.resolve(`src/templates/event.js`)
 
   return graphql(`
-    query therapiesQuery {
+    query getAll {
+      therapies {
         therapies {
-          therapies {
-            id
-            name
-            heading
-            paragraphs
-            photoUrl
-            therapists
-            slug
+          id
+          photoUrl
+          heading
+          name
+          paragraphs
+          slug
+          therapists
+          price
+          intro
+        }
+      }
+      events {
+        events {
+          date
+          description
+          id
+          location
+          name
+          photoUrl
+          price
+          regular
+          intro
+          slug
+          regularVenue {
+            location,
+            weekdays
           }
         }
       }
-  `, { limit: 100 }).then( result => {
+    }
+  `, { limit: 100 }).then(result => {
     if (result.errors) {
       throw result.errors
     }
 
-    // Create pages
+    // Create therapy pages
     result.data.therapies.therapies.forEach(t => {
       createPage({
         path: `${t.slug}`,
@@ -97,24 +119,19 @@ exports.createPages = ({ graphql, actions }) => {
         }
       })
     })
+
+    // Create event pages
+    result.data.events.events.forEach(t => {
+      createPage({
+        path: `${t.slug}`,
+        component: eventTemplate,
+        context: {
+          ...t
+        }
+      })
+    })
   })
 }
-
-
-// exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-//   if (stage === "build-html") {
-//     actions.setWebpackConfig({
-//       module: {
-//         rules: [
-//           {
-//             test: /@firebase/,
-//             use: loaders.null(),
-//           },
-//         ],
-//       },
-//     })
-//   }
-// }
 
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
   if (stage === 'build-html') {

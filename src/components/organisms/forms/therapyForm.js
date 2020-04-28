@@ -29,6 +29,7 @@ function paragraphsReducer(state, action) {
 const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typeOfAction }) => {
 
   const name = useFormInput(therapy?.name || '')
+  const intro = useFormInput(therapy?.intro || '')
   const heading = useFormInput(therapy?.heading || '')
   const price = useFormInput(therapy?.price || 0)
   const extraP = useFormInput('')
@@ -55,6 +56,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
     const therapyObj = {
       name: name.value,
       heading: heading.value,
+      intro: intro.value,
       price: parseInt(price.value) || 0,
       paragraphs: paragraphs,
       slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
@@ -211,6 +213,10 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
                 <StyledTextInput width='50px' type='number' className="form-control" {...price} />
               </Container>
             </Container>
+            <StyledFormGroup direction='column'>
+              <StyledLabel>Homepage intro</StyledLabel>
+              <StyledTextInput className="form-control" {...intro} />
+            </StyledFormGroup>
             <StyledFormGroup direction='column'>
               <StyledLabel>Heading</StyledLabel>
               <StyledTextInput className="form-control" {...heading} />

@@ -7,6 +7,7 @@ const StyledHeader = styled.h1`
   color: ${({color}) => color};
   margin: ${({ margin }) => margin};
   font-size: 37px;
+  text-align: ${({align}) => align};
 `
 
 const StyledParagraph = styled.p`
@@ -55,12 +56,13 @@ export const NoteCounter = styled.span`
   border-radius: 50%;
 `
 
-export const Header = ({ children, weight, color, margin, size }) => (
+export const Header = ({ children, weight, color, margin, size, align }) => (
   <StyledHeader 
     weight={weight}
     color={color}
     margin={margin}
     size={size}
+    align={align}
     >
     {children}
   </StyledHeader>

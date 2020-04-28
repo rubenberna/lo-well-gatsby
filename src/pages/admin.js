@@ -47,6 +47,7 @@ export const allDataQuery = graphql`
         slug
         therapists
         price
+        intro
       }
     }
     events {
@@ -59,6 +60,8 @@ export const allDataQuery = graphql`
         photoUrl
         price
         regular
+        intro
+        slug
         regularVenue {
           location,
           weekdays
