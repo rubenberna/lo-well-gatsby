@@ -26,6 +26,8 @@ const StyledSubHeader = styled.h4`
   font-size: ${({ size }) => size};
   opacity: ${({ opacity }) => opacity};
   cursor: ${({ cursor }) => cursor};
+  text-align: ${({ textAlign }) => textAlign};
+  text-transform: ${({ textTransform }) => textTransform};
 `
 
 const StyledFooter = styled.span`
@@ -45,6 +47,7 @@ export const StyledSpan = styled.span`
   margin: ${({margin}) => margin};
   cursor: ${({cursor}) => cursor};
   color: ${({ color }) => color};
+  font-weight: ${({ weight }) => weight};
   background: ${({background}) => background};
 `
 
@@ -80,7 +83,7 @@ export const Paragraph = ({ children, weight, color, margin, size, align }) => (
   </StyledParagraph>
 )
 
-export const SubHeader = ({ children, weight, color, margin, opacity, size, fontFamily, cursor }) => (
+export const SubHeader = ({ children, weight, color, margin, opacity, size, fontFamily, cursor, textAlign, textTransform }) => (
   <StyledSubHeader 
     weight={weight}
     color={color}
@@ -89,6 +92,8 @@ export const SubHeader = ({ children, weight, color, margin, opacity, size, font
     size={size}
     fontFamily={fontFamily}
     cursor={cursor}
+    textAlign={textAlign}
+    textTransform={textTransform}
     >
     {children}
   </StyledSubHeader>

@@ -20,14 +20,16 @@ const EventTemplate = ({ pageContext }) => {
     date,
     location,
     regular,
-    regularVenue
+    regularVenue,
+    price
   } = pageContext
 
-  const venues = {
+  const venue = {
     regular,
     date,
     location,
-    regularVenue
+    regularVenue,
+    price
   }
 
   const renderContent = () => (
@@ -36,16 +38,16 @@ const EventTemplate = ({ pageContext }) => {
       maxWidth='960px'
       padding='0 1.0875rem 1.45rem'
       display='flex'
-      justify='space-around'
+      justify='space-between'
       align='flex-start'
       minHeight='600px'
     >
-      <Container display='flex' direction='column' margin='40px 0' width='700px'>
+      <Container display='flex' direction='column' margin='40px 0' width='98%'>
         <StyledImage src={photoUrl} width='inherit' height='410px' fit='cover'/>
         <SubHeader margin='20px 0 10px 0'>{name}</SubHeader>
         <Paragraph>{description}</Paragraph>
       </Container>
-      <VenuesCard venues={venues}/>
+      <VenuesCard venue={venue}/>
     </Container>
   )
 
