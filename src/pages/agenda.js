@@ -39,6 +39,7 @@ export const eventsQuery = graphql`
         name
         photoUrl
         regular
+        slug
         regularVenue {
           location
           weekdays

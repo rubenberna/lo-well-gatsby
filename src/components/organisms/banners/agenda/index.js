@@ -13,7 +13,7 @@ const AgendaBanner = ({ event, number, last }) => {
 
   return (
     <FadeIn>
-      <div className='ui container'>
+      <div className='ui container' o>
         <Container 
           display='flex' 
           justify='center'
@@ -28,7 +28,7 @@ const AgendaBanner = ({ event, number, last }) => {
               paragraph: event.description,
               display: 'flex',
               justify: even ? 'flex-start' : 'flex-end',
-              footer: <EventDetails event={event}/>
+              footer: <EventDetails slug={event.slug}/>
             }}
           </Intro>
           <Container>
