@@ -54,7 +54,7 @@ const VenuesCard = ({ venue }) => {
 
   const renderPrice = () => (
     <Container>
-      <StyledSpan color={lightGrey} weight='600'>Price:{' '}</StyledSpan> 
+      <StyledSpan color={lightGrey} weight='600'>Prijs:{' '}</StyledSpan> 
       <StyledSpan weight='200'>{venue.price}€</StyledSpan>
     </Container>
   )

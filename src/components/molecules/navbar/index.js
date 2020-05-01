@@ -17,7 +17,13 @@ const Header = ({ siteTitle }) => (
       query MyQuery {
         therapies {
           therapies {
-            name,
+            name
+            slug
+          }
+        }
+        events {
+          events {
+            name
             slug
           }
         }
@@ -54,6 +60,19 @@ const Header = ({ siteTitle }) => (
               >
                 Agenda
               </NavLink>
+              <NavDropdown 
+                title="Events" 
+                id="basic-nav-dropdown">
+                {data.events.events.map((t, i) =>
+                  <NavLink
+                    key={i}
+                    className='dropdown-item'
+                    to={t.slug}
+                    activeStyle={{ color: secondaryColor }}
+                  >
+                    {t.name}
+                  </NavLink>)}
+              </NavDropdown>
               <NavDropdown 
                 title="Therapies" 
                 id="basic-nav-dropdown">
