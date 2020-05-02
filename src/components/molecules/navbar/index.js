@@ -53,13 +53,6 @@ const Header = ({ siteTitle }) => (
               >
                 Home
               </NavLink>
-              <NavLink
-                className='nav-link'
-                to='/agenda'
-                activeStyle={{ color: secondaryColor }}
-              >
-                Agenda
-              </NavLink>
               <NavDropdown 
                 title="Events" 
                 id="basic-nav-dropdown">
@@ -73,6 +66,13 @@ const Header = ({ siteTitle }) => (
                     {t.name}
                   </NavLink>)}
               </NavDropdown>
+              <NavLink
+                className='nav-link'
+                to='/agenda'
+                activeStyle={{ color: secondaryColor }}
+              >
+                Agenda
+              </NavLink>
               <NavDropdown 
                 title="Therapies" 
                 id="basic-nav-dropdown">

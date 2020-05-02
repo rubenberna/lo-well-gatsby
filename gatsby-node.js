@@ -98,8 +98,9 @@ exports.createPages = ({ graphql, actions }) => {
           intro
           slug
           regularVenue {
-            location,
+            location
             weekdays
+            time
           }
         }
       }

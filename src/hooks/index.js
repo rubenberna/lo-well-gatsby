@@ -7,7 +7,7 @@ export const useFormInput = (initialValue) => {
     setValue(initialValue)
   },[initialValue])
 
-  function handleChange(e) {  
+  function handleChange(e) {      
     setValue(e.target.value)
   }
 

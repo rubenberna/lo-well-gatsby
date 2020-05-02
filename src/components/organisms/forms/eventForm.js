@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import _ from 'lodash'
+import moment from 'moment'
 import { Form } from 'react-bootstrap'
-import Select from 'react-select';
+import Select from 'react-select'
+import TimePicker from 'rc-time-picker'
+import 'rc-time-picker/assets/index.css'
 
 import { UPDATE_EVENT, CREATE_EVENT } from '../../../services/types'
 import { useFormInput } from '../../../hooks'
@@ -10,6 +13,7 @@ import { Container } from '../../styledComponents/containers'
 import { SubHeader, Paragraph } from '../../styledComponents/typography'
 import { weekdaysList } from '../../_helpers'
 import { FormAlert } from '../../molecules/alerts'
+moment.locale('nl-be');
 
 function regularVenueReducer(state, action) {
   switch (action.type) {
@@ -28,19 +32,26 @@ function regularVenueReducer(state, action) {
   }
 }
 
+const now = moment().hour(0).minute(0);
+
 const initialVenue = [
-  { location: '', weekdays: [] }
+  { location: '', weekdays: '', time: now.toISOString() }
 ]
+
+const format = 'h:mm a';
+
 
 const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => {
   const name = useFormInput(event?.name || '')
   const intro = useFormInput(event?.intro || '')
-  const price = useFormInput(event?.price || 0)
+  const price = useFormInput(event?.price || '0')
   const description = useFormInput(event?.description || '')
   const location = useFormInput(event?.location || '')
   const date = useFormInput(event?.date || '')
+  const [time, setTime] = useState(event?.time || now)
   const extraVenueLocation = useFormInput('')
-  const [extraVenueWeekdays, setExtraVenueWeekdays] = useState([])
+  const [extraVenueWeekdays, setExtraVenueWeekdays] = useState('')
+  const [extraVenueTime, setExtraVenueTime] = useState(now)
   const [regular, setRegular] = useState(event?.regular || false)
   const [photo, setPhoto] = useState()
   const [showExtraVenue, setShowExtraVenue] = useState(false)
@@ -62,7 +73,7 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
     const file = e.target.files[0]
     setPhoto(file)
   }
-
+  
   const handleSubmit = e => {
     e.preventDefault()
     const type = typeOfAction === 'edit-events' ? UPDATE_EVENT : CREATE_EVENT
@@ -70,13 +81,14 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
     const eventObj = {
       date: date.value,
       description: description.value,
+      time: time.toISOString(),
       location: location.value,
       name: name.value,
       intro: intro.value,
       photo,
       slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
       photoUrl: event?.photoUrl || '',
-      price: parseInt(price.value) || 0,
+      price: price.value || 0,
       regular,
       regularVenue: regularVenue || initialVenue,
       id: event?.id || ''
@@ -96,10 +108,10 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
   }
 
   const validate = (eventObj) => {
-    let validationObj = _.omit(eventObj, ['id', 'photoUrl', 'photo', 'date', 'location', 'regularVenue', 'regular'])
+    let validationObj = _.omit(eventObj, ['id', 'photoUrl', 'photo', 'date', 'time', 'location', 'regularVenue', 'regular'])
 
     if (!event && !photo) return false
-    if (!regular && (!date.value || !location.value)) return false
+    if (!regular && (!date.value || !location.value || !time)) return false
     if (regular && !regularVenue[0]) return false
 
     function checkIfEmpty(el) {
@@ -116,9 +128,15 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
     changeVenue(currVenue, index)
   }
 
-  const changeVenueWeekdays = ({ weekdays, index }) => {
+  const changeVenueWeekdays = ({ weekdays, index }) => {    
     let currVenue = regularVenue[index]
-    currVenue.weekdays = weekdays.map(w => w.value)
+    currVenue.weekdays = weekdays.value
+    changeVenue(currVenue, index)
+  }
+
+  const changeVenueTime = ({ time, index }) => {    
+    let currVenue = regularVenue[index]
+    currVenue.time = time.toISOString()
     changeVenue(currVenue, index)
   }
 
@@ -136,7 +154,8 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
   const saveNewVenue = () => {
     let extraVenue = {
       location: extraVenueLocation.value,
-      weekdays: extraVenueWeekdays.map(w => w.value)
+      weekdays: extraVenueWeekdays.value,
+      time: extraVenueTime.toISOString()
     }
 
     dispatch({
@@ -146,10 +165,8 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
     setShowExtraVenue(false)
   }
 
-  const renderWeekDays = (list) => {
-    if (list) {
-      return list.map((t, i) => ({ value: t, label: t }))
-    }
+  const renderWeekDays = (day) => {
+    return { value: day, label: day }
   }
 
   const formTitle = typeOfAction === 'edit-events' ? 'Edit event' : 'Create event';
@@ -176,13 +193,22 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
             {...extraVenueLocation}
           />
         </Container>
-        <Container width='280px'>
+        <Container width='140px'>
           <StyledLabel>Weekdays</StyledLabel>
           <Select
-            isMulti
             value={extraVenueWeekdays}
             onChange={e => setExtraVenueWeekdays(e)}
             options={weekdaysList}
+          />
+        </Container>
+        <Container width='95px'>
+          <StyledLabel>At what time</StyledLabel>
+          <TimePicker
+            className='timePicker'
+            format={format}
+            value={moment(extraVenueTime)}
+            onChange={setExtraVenueTime}
+            showSecond={false}
           />
         </Container>
         <button
@@ -207,10 +233,20 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
           <StyledLabel>Date</StyledLabel>
           <StyledTextInput type='date' className="form-control" {...date} />
         </Container>
+        <Container width='95px'>
+          <StyledLabel>At what time</StyledLabel>
+          <TimePicker
+            className='timePicker'
+            format={format}
+            value={time}
+            onChange={setTime}
+            showSecond={false}
+          />
+        </Container>
       </StyledFormGroup>
     )
     else {
-      if (regularVenue) {
+      if (regularVenue) {       
         return regularVenue.map((venue, i) => (
           <div key={i}>
             {venue.location &&
@@ -224,13 +260,22 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
                     onChange={e => changeVenueLocation({ location: e.target.value, index: i })}
                   />
                 </Container>
-                <Container width='280px'>
-                  <StyledLabel>Weekdays</StyledLabel>
+                <Container width='140px'>
+                  <StyledLabel>Weekday</StyledLabel>
                   <Select
-                    isMulti
                     value={renderWeekDays(venue.weekdays)}
                     onChange={e => changeVenueWeekdays({ weekdays: e, index: i })}
                     options={weekdaysList}
+                  />
+                </Container>
+                <Container width='95px'>
+                  <StyledLabel>At what time</StyledLabel>
+                  <TimePicker
+                    className='timePicker'
+                    format={format}
+                    value={moment(venue.time)}
+                    onChange={e => changeVenueTime({ time: e, index: i})}
+                    showSecond={false}
                   />
                 </Container>
                 <button
@@ -241,7 +286,7 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
                     payload: i
                   })}>
                   -
-            </button>
+              </button>
               </StyledFormGroup>
             }
           </div>
@@ -263,14 +308,14 @@ const EventForm = ({ event, closeForm, handleFormSubmission, typeOfAction }) => 
             <button type="button" className="btn btn-secondary" onClick={closeForm}>exit</button>
           </Container>
           <StyledForm width='100%' onSubmit={handleSubmit}>
-            <Container display='flex' justify='space-between' width='60%' margin='10px 0'>
+            <Container display='flex' justify='space-between' width='90%' margin='10px 0'>
               <Container>
                 <StyledLabel>Name</StyledLabel>
                 <StyledTextInput width='300px' className="form-control" {...name} />
               </Container>
               <Container>
                 <StyledLabel>Price</StyledLabel>
-                <StyledTextInput width='50px' type='number' className="form-control" {...price} />
+                <StyledTextInput width='250px' className="form-control" {...price} />
               </Container>
             </Container>
             <StyledFormGroup direction='column'>

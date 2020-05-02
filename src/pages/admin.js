@@ -63,8 +63,9 @@ export const allDataQuery = graphql`
         intro
         slug
         regularVenue {
-          location,
+          location
           weekdays
+          time
         }
       }
     }

@@ -45,3 +45,13 @@ input[type=number] {
   height: 228px;
   object-fit: cover;
 }
+
+.timePicker {
+  width: 90px;
+  height: 38px;
+}
+
+.rc-time-picker-input {
+  height: 38px !important;
+  font-size: 14px !important;
+}

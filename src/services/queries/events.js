@@ -6,13 +6,16 @@ export const createEvent = async (event) => {
   event.photoUrl = await uploadPhoto(event.photo)
   delete event.photo
   delete event.id
+  console.log(event);
+  
   events.add({ ...event })
 }
 
 export const updateEvent = async (event) => {
   if (event.photo) {
     event.photoUrl = await uploadPhoto(event.photo)
-  }  
+  }
+  
   const eventRef = events.doc(event.id)
   eventRef.update({
     date: event.date,

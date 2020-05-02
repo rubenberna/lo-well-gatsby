@@ -2,11 +2,12 @@ import React from "react"
 import { graphql } from 'gatsby'
 import moment from 'moment'
 
+import SEO from "../components/seo"
+import Layout from "../components/layout"
 import AgendaBanner from '../components/organisms/banners/agenda'
 import Ribbon from '../components/molecules/ribbon'
 import { secondaryColor } from '../components/styledComponents/variables'
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Calendar from '../components/organisms/banners/calendar'
 
 const Agenda = ({ data }) => {
 
@@ -23,7 +24,7 @@ const Agenda = ({ data }) => {
     <Layout>
       <SEO title="Agenda" />
       <Ribbon color={secondaryColor}>Check what's comming next</Ribbon>
-      {eventsList} 
+      <Calendar events={events}/>
     </Layout>
   )
 }
@@ -43,6 +44,7 @@ export const eventsQuery = graphql`
         regularVenue {
           location
           weekdays
+          time
         }
         price
       }

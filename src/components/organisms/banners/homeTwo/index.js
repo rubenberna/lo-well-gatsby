@@ -10,8 +10,6 @@ const HomeBannerTwo = ({ data }) => {
   const { therapies } = data.therapies
 
   let allProducts = [...events, ...therapies]
-  console.log(allProducts);
-  
   
   return (
     <Container display='flex' justify='center' align='center' margin='50px 0'>

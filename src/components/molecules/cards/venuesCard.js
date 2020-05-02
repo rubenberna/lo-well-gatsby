@@ -5,7 +5,7 @@ import moment from 'moment'
 import { Container } from '../../styledComponents/containers'
 import { SubHeader, StyledSpan } from '../../styledComponents/typography'
 import { lightGrey, secondaryColor } from '../../styledComponents/variables'
-import Dates from '../../atoms/dates'
+moment.locale('nl-be');
 
 const StickyCard = styled.div`
   position: -webkit-sticky;
@@ -30,7 +30,12 @@ const VenuesCard = ({ venue }) => {
   
   const renderDates = (venue) => {    
     if (!venue.weekdays) return formatDate(venue.date)
-    else return <Dates dates={venue.weekdays}/>
+    else {
+      let time = moment(venue.time).format('h:mm')      
+      return (
+        <StyledSpan weight='200'>{venue.weekdays}, om {time}u</StyledSpan>
+      )
+    }
   }
 
   const renderDetails = (venue) => (

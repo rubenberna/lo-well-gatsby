@@ -10,8 +10,6 @@ import { secondaryColor } from '../components/styledComponents/variables'
 import VenuesCard from '../components/molecules/cards/venuesCard'
 
 const EventTemplate = ({ pageContext }) => {
-
-  console.log(pageContext);
   
   const {
     name,

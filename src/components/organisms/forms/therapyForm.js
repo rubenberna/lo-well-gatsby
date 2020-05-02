@@ -57,7 +57,7 @@ const TherapyForm = ({ therapy, closeForm, therapists, handleFormSubmission, typ
       name: name.value,
       heading: heading.value,
       intro: intro.value,
-      price: parseInt(price.value) || 0,
+      price: price.value || 0,
       paragraphs: paragraphs,
       slug: `/${name.value.toLowerCase().split(' ').join('-')}`,
       photo,

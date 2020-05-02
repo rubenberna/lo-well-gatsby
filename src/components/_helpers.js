@@ -1,10 +1,10 @@
 export const weekdaysList = [
-  { value: 'Ma.', label: 'Ma.' },
-  { value: 'Di.', label: 'Di.' },
-  { value: 'Wo.', label: 'Wo.' },
-  { value: 'Do.', label: 'Do.' },
-  { value: 'Vr.', label: 'Vr.' },
-  { value: 'Za.', label: 'Za.' },
-  { value: 'Zo.', label: 'Zo.' },
+  { value: 'Ma.', label: 'Ma.', calValue: 'Monday' },
+  { value: 'Di.', label: 'Di.', calValue: 'Tuesday' },
+  { value: 'Wo.', label: 'Wo.', calValue: 'Wednesday' },
+  { value: 'Do.', label: 'Do.', calValue: 'Thursday' },
+  { value: 'Vr.', label: 'Vr.', calValue: 'Friday' },
+  { value: 'Za.', label: 'Za.', calValue: 'Saturday' },
+  { value: 'Zo.', label: 'Zo.', calValue: 'Sunday' },
 ];
 
