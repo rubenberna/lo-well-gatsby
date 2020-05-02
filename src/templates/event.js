@@ -33,7 +33,7 @@ const EventTemplate = ({ pageContext }) => {
   const renderContent = () => (
     <Container
       margin='0 auto'
-      maxWidth='960px'
+      maxWidth='1143px'
       padding='0 1.0875rem 1.45rem'
       display='flex'
       justify='space-between'

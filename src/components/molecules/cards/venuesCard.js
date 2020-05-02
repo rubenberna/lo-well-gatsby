@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
+import _ from 'lodash'
 
 import { Container } from '../../styledComponents/containers'
-import { SubHeader, StyledSpan } from '../../styledComponents/typography'
+import { SubHeader, StyledSpan, Paragraph } from '../../styledComponents/typography'
 import { lightGrey, secondaryColor } from '../../styledComponents/variables'
 moment.locale('nl-be');
 
@@ -23,17 +24,28 @@ const VenuesCard = ({ venue }) => {
 
   const renderVenue = () => {
     if(venue.regular) {
-      return venue.regularVenue.map((v,i) => renderDetails(v))
+      let uniqueLocation = _.unionBy(venue.regularVenue, 'location')
+      let grouped = []
+      uniqueLocation.forEach(v => {        
+        let joinedByLocation = venue.regularVenue.filter(l => l.location === v.location)
+        grouped.push(joinedByLocation)
+        
+      })      
+      // return venue.regularVenue.map((v,i) => renderDetails(v))
+      return grouped.map(el => {
+        if (el.length === 1) return renderDetails(el[0])
+        else return renderGroupedVenue(el)
+      })     
     }
     else return renderDetails(venue)
   }
   
   const renderDates = (venue) => {    
-    if (!venue.weekdays) return formatDate(venue.date)
+    if (!venue.weekdays) return formatDate(venue)
     else {
-      let time = moment(venue.time).format('h:mm')      
+      let time = moment(venue.time).format('H:mm')      
       return (
-        <StyledSpan weight='200'>{venue.weekdays}, om {time}u</StyledSpan>
+        <Paragraph margin='0'><StyledSpan weight='200'>{venue.weekdays}, om {time}u</StyledSpan></Paragraph>
       )
     }
   }
@@ -52,9 +64,26 @@ const VenuesCard = ({ venue }) => {
     </div>
   )
 
-  const formatDate = (date) => {
+  const renderGroupedVenue = sameLocationVenues => {
+    let agenda = sameLocationVenues.map(ev => ({ weekdays: ev.weekdays, time: ev.time }))
+    return (
+      <div>
+        <Container display='flex' direction='column' margin='10px 0'>
+          <StyledSpan color={lightGrey} weight='600'>Waneer</StyledSpan>
+          <StyledSpan weight='200'>{agenda.map(el => renderDates(el))}</StyledSpan>
+        </Container>
+        <Container display='flex' direction='column' margin='10px 0'>
+          <StyledSpan color={lightGrey} weight='600'>Waar</StyledSpan>
+          <StyledSpan weight='200'>{sameLocationVenues[0].location}</StyledSpan>
+        </Container>
+        <hr />
+      </div>
+    )
+  }
+
+  const formatDate = (venue) => {
     moment.locale('nl-be');
-    return moment(date).format('LL')
+    return `${moment(venue.date).format('MMMM Do')}, ${moment(venue.time).format('H:mm')}u`
   }
 
   const renderPrice = () => (
