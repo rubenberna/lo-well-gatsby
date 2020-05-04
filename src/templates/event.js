@@ -1,4 +1,5 @@
 import React from 'react'
+import LazyLoad from 'react-lazyload';
 
 import SEO from "../components/seo"
 import Layout from '../components/layout'
@@ -41,7 +42,9 @@ const EventTemplate = ({ pageContext }) => {
       minHeight='600px'
     >
       <Container display='flex' direction='column' margin='40px 0' width='98%'>
-        <StyledImage src={photoUrl} width='inherit' height='410px' fit='cover'/>
+        <LazyLoad height={400}>
+          <StyledImage src={photoUrl} width='inherit' height='410px' fit='cover'/>
+        </LazyLoad>
         <SubHeader margin='20px 0 10px 0'>{name}</SubHeader>
         <Paragraph>{description}</Paragraph>
       </Container>

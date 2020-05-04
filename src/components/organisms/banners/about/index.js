@@ -21,8 +21,9 @@ const AboutBanner = ({ therapists, linkedProps }) => {
       padding='30px 160px' 
       display='flex'
       justify='space-between'
+      width='90%'
       >
-      <Presentation presentationObj={presentationObj}/>
+      <Presentation presentationObj={presentationObj} therapists={therapists}/>
       <Controls 
         active={active}
         setActive={setActive} 

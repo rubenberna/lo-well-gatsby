@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { navigate } from "@reach/router"
 import 'moment/locale/nl-be'  
-
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import { weekdaysList } from '../../../_helpers'
+import { Container } from '../../../styledComponents/containers'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+
 
 moment.locale('nl-be', {
   week: {
@@ -101,7 +102,10 @@ const EventsCalendar = ({ events }) => {
   }
 
   return (
-    <div className='ui container' style={{margin: '40px'}}>
+    <Container
+      margin='40px 90px'
+      padding='30px 70px'
+    >
       <Calendar
         min={minTime}
         max={maxTime}
@@ -123,7 +127,7 @@ const EventsCalendar = ({ events }) => {
           next: '>'
         }}
       />
-    </div >
+    </Container>
   )
 }
 

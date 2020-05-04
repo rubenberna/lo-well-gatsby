@@ -9,7 +9,7 @@ const Controls = ({ active, setActive, therapists }) => {
   const therapistsList = therapists.map((t, i) => 
     <StyledLi 
       key={i} 
-      color={active === t.name ? 'red' : '#fff'}
+      color={active === t.name ? '#f6d743' : '#fff'}
       hoverOpacity='0.8'
       onClick={() => setActive(t.name)}
         >
@@ -19,20 +19,21 @@ const Controls = ({ active, setActive, therapists }) => {
 
   return (
     <Container 
-      background='black' 
+      background='#06623b' 
       width='230px' 
       height='400px'
       display='flex'
       direction='column'
       padding='20px'
+      color='#fff'
       >
-      <Paragraph color='#fff' margin='5px 0' size='20px'>Over ons</Paragraph>
+      <Paragraph margin='5px 0' color='#fff' size='20px'>Over ons</Paragraph>
       <Container height='.25rem' width='3.75rem' background='#fff' margin='0 0 12px 0'/>
       <StyledList>
         {therapistsList}
         <StyledLi 
           hoverOpacity='0.8'
-          color={active === 'contact'? 'red' : '#fff'}
+          color={active === 'contact'? '#f6d743' : '#fff'}
           onClick={() => setActive('contact')}
           >
         Contact
