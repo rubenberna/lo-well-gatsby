@@ -32,29 +32,29 @@ const VenuesCard = ({ venue }) => {
         
       })      
       // return venue.regularVenue.map((v,i) => renderDetails(v))
-      return grouped.map(el => {
-        if (el.length === 1) return renderDetails(el[0])
-        else return renderGroupedVenue(el)
+      return grouped.map((el, i) => {
+        if (el.length === 1) return renderDetails(el[0], i)
+        else return renderGroupedVenue(el, i)
       })     
     }
     else return renderDetails(venue)
   }
   
-  const renderDates = (venue) => {    
+  const renderDates = (venue, i) => {    
     if (!venue.weekdays) return formatDate(venue)
     else {
       let time = moment(venue.time).format('H:mm')      
       return (
-        <Paragraph margin='0'><StyledSpan weight='200'>{venue.weekdays}, om {time}u</StyledSpan></Paragraph>
+        <Paragraph key={i} margin='0'><StyledSpan weight='200'>{venue.weekdays}, om {time}u</StyledSpan></Paragraph>
       )
     }
   }
 
-  const renderDetails = (venue) => (
-    <div>
+  const renderDetails = (venue, i) => (
+    <div key={i}>
       <Container display='flex' direction='column' margin='10px 0'>
         <StyledSpan color={lightGrey} weight='600'>Waneer</StyledSpan>
-        <StyledSpan weight='200'>{renderDates(venue)}</StyledSpan>
+        <StyledSpan weight='200'>{renderDates(venue, i)}</StyledSpan>
       </Container>
       <Container display='flex' direction='column' margin='10px 0'>
         <StyledSpan color={lightGrey} weight='600'>Waar</StyledSpan>
@@ -64,10 +64,10 @@ const VenuesCard = ({ venue }) => {
     </div>
   )
 
-  const renderGroupedVenue = sameLocationVenues => {
+  const renderGroupedVenue = (sameLocationVenues, i) => {
     let agenda = sameLocationVenues.map(ev => ({ weekdays: ev.weekdays, time: ev.time }))
     return (
-      <div>
+      <div key={i}>
         <Container display='flex' direction='column' margin='10px 0'>
           <StyledSpan color={lightGrey} weight='600'>Waneer</StyledSpan>
           <StyledSpan weight='200'>{agenda.map(el => renderDates(el))}</StyledSpan>
