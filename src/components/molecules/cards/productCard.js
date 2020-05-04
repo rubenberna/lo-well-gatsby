@@ -1,5 +1,6 @@
 import React from 'react'
-import FadeIn from 'react-fade-in';
+import FadeIn from 'react-fade-in'
+import LazyLoad from 'react-lazyload'
 
 import { Card } from 'react-bootstrap'
 import { ReadMoreBtn } from '../../styledComponents/buttons'
@@ -10,7 +11,9 @@ const ProductCard = ({ product }) => {
   return (
     <FadeIn>
       <StyledCard style={{ width: '18rem' }}>
-        <Card.Img variant="top" src={product.photoUrl} />
+        <LazyLoad>
+          <Card.Img variant="top" src={product.photoUrl} />
+        </LazyLoad>
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
           <Card.Text>

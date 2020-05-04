@@ -1,5 +1,5 @@
 import React from 'react'
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazyload'
 
 import SEO from "../components/seo"
 import Layout from '../components/layout'
