@@ -20,7 +20,7 @@
     "gatsby-transformer-sharp": "^2.4.3",
     "lodash": "^4.17.15",
     "materialize-css": "^1.0.0-rc.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "rc-time-picker": "^3.7.3",
     "react": "^16.12.0",
